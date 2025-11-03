@@ -956,3 +956,92 @@ textarea.form-control {
     grid-template-columns: 1fr;
   }
 }
+/* 热门标签页面样式 */
+.popular-tags-page {
+  display: none;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.tag-large {
+  background-color: #4a7b9d;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tag-large:hover {
+  background-color: #3a6a8d;
+  transform: scale(1.05);
+}
+
+.tags-container {
+  padding: 20px 0;
+}
+
+/* 登录封面页样式 */
+.cover-container {
+  text-align: center;
+  max-width: 500px;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.logo span {
+  color: #f9d56e;
+}
+
+.tagline {
+  font-size: 18px;
+  margin-bottom: 30px;
+  opacity: 0.9;
+  color: white;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.guest-option {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.guest-button {
+  background-color: transparent;
+  border: 2px solid #f9d56e;
+  color: #f9d56e;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.guest-button:hover {
+  background-color: #f9d56e;
+  color: #2c3e50;
+}

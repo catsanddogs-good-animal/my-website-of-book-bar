@@ -110,7 +110,7 @@ const books = [
     author: "东野圭吾",
     description: "日本作家东野圭吾创作的长篇小说，讲述了一对有着悲惨命运的少年少女，19年来以相当残酷、孤独、单纯的灵魂相爱却无法相守的故事。",
     tags: ["悬疑", "推理", "东野圭吾", "日本文学"],
-    cover: "images/white-night.jpg",
+    cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4=",
     publisher: "南海出版公司",
     year: 1999,
     rating: 4.8,
@@ -123,7 +123,7 @@ const books = [
     author: "马可·奥勒留",
     description: "古罗马皇帝马可·奥勒留所著的哲学随笔集，是斯多葛派哲学的重要典籍。书中阐述了作者对自然、人生、社会的深刻思考。",
     tags: ["哲学", "古典", "斯多葛", "人生思考"],
-    cover: "images/meditations.jpg",
+    cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4=",
     publisher: "中央编译出版社",
     year: 180,
     rating: 4.5,
@@ -881,3 +881,139 @@ function showBookDetail(bookId) {
   
   showPage('detail');
 }
+// 在 setupEventListeners 函数中添加新的事件监听
+function setupEventListeners() {
+  // ... 已有代码 ...
+  
+  // 导航链接
+  document.getElementById('categoriesLink').addEventListener('click', function(e) {
+    e.preventDefault();
+    showPage('categories');
+  });
+  
+  document.getElementById('popularLink').addEventListener('click', function(e) {
+    e.preventDefault();
+    showPage('popularTags');
+  });
+  
+  document.getElementById('uploadLink').addEventListener('click', function(e) {
+    e.preventDefault();
+    showPage('upload');
+  });
+  
+  // 返回按钮
+  document.getElementById('backFromCategories').addEventListener('click', function() {
+    showPage('home');
+  });
+  
+  document.getElementById('backFromTags').addEventListener('click', function() {
+    showPage('home');
+  });
+  
+  document.getElementById('backFromUpload').addEventListener('click', function() {
+    showPage('home');
+  });
+  
+  // 分类卡片点击事件
+  document.querySelectorAll('.category-card').forEach(card => {
+    card.addEventListener('click', function() {
+      const category = this.getAttribute('data-category');
+      showCategoryBooks(category);
+    });
+  });
+  
+  // 标签点击事件
+  document.querySelectorAll('.tag-large').forEach(tag => {
+    tag.addEventListener('click', function() {
+      const tagName = this.getAttribute('data-tag');
+      showBooksByTag(tagName);
+    });
+  });
+  
+  // ... 其他已有代码 ...
+}
+
+// 显示页面
+function showPage(page) {
+  // 隐藏所有页面
+  document.getElementById('home-page').style.display = 'none';
+  document.getElementById('categoriesPage').style.display = 'none';
+  document.getElementById('popularTagsPage').style.display = 'none';
+  document.getElementById('uploadPage').style.display = 'none';
+  
+  // 显示指定页面
+  switch(page) {
+    case 'home':
+      document.getElementById('home-page').style.display = 'block';
+      break;
+    case 'categories':
+      document.getElementById('categoriesPage').style.display = 'block';
+      break;
+    case 'popularTags':
+      document.getElementById('popularTagsPage').style.display = 'block';
+      break;
+    case 'upload':
+      document.getElementById('uploadPage').style.display = 'block';
+      break;
+  }
+}
+
+// 显示分类书籍
+function showCategoryBooks(category) {
+  const categoryBooks = books.filter(book => book.category === category);
+  displaySearchResults(categoryBooks, `分类: ${getCategoryName(category)}`);
+}
+
+// 根据标签显示书籍
+function showBooksByTag(tagName) {
+  const taggedBooks = books.filter(book => book.tags.includes(tagName));
+  
+  // 更新结果标题
+  document.getElementById('tagResultsTitle').textContent = `标签: ${tagName}`;
+  document.getElementById('tagResultsCount').textContent = `找到 ${taggedBooks.length} 个结果`;
+  
+  // 清空结果网格
+  const tagResultsGrid = document.getElementById('tagResultsGrid');
+  tagResultsGrid.innerHTML = '';
+  
+  // 显示或隐藏无结果消息
+  const tagNoResults = document.getElementById('tagNoResults');
+  if (taggedBooks.length === 0) {
+    tagNoResults.style.display = 'block';
+  } else {
+    tagNoResults.style.display = 'none';
+    
+    // 添加结果到网格
+    taggedBooks.forEach(book => {
+      const bookCard = createBookCard(book);
+      tagResultsGrid.appendChild(bookCard);
+    });
+  }
+  
+  // 显示搜索结果
+  document.getElementById('tagResults').style.display = 'block';
+}
+
+// 获取分类名称
+function getCategoryName(category) {
+  const categoryNames = {
+    'fiction': '文学小说',
+    'scifi': '科幻奇幻',
+    'mystery': '悬疑推理',
+    'history': '历史传记',
+    'science': '科普读物',
+    'philosophy': '哲学心理'
+  };
+  return categoryNames[category] || category;
+}
+
+// 页面加载时检查登录状态
+document.addEventListener('DOMContentLoaded', function() {
+  const currentUser = localStorage.getItem('currentUser');
+  if (!currentUser) {
+    window.location.href = 'cover.html';
+  } else {
+    renderBooks();
+    setupEventListeners();
+  }
+});
