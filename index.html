@@ -7,136 +7,129 @@
   <title>Book Bar | 发现与分享好书的平台</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
-    }
-
-    .cover-page {
-      background: linear-gradient(135deg, #4a7b9d 0%, #2c3e50 100%);
-      color: white;
-      height: 100vh;
+    /* 封面样式 */
+    #cover-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #2c3e50 0%, #4a7b9d 100%);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      z-index: 2000;
+      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+      color: white;
+      text-align: center;
+      padding: 20px;
     }
 
-    .cover-container {
-      text-align: center;
-      max-width: 500px;
+    #cover-page.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cover-content {
+      max-width: 800px;
       padding: 40px;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     }
 
     .cover-logo {
-      font-size: 48px;
-      font-weight: 700;
+      font-size: 5rem;
       margin-bottom: 20px;
+      color: #e67e22;
     }
 
-    .cover-logo span {
-      color: #f9d56e;
+    .cover-title {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
     }
 
-    .cover-tagline {
-      font-size: 18px;
-      margin-bottom: 30px;
+    .cover-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
       opacity: 0.9;
     }
 
-    .auth-form {
+    .cover-description {
+      font-size: 1.2rem;
+      margin-bottom: 50px;
+      line-height: 1.8;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cover-actions {
       display: flex;
-      flex-direction: column;
-      gap: 15px;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
-    .form-group {
-      text-align: left;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 12px 15px;
+    .cover-button {
+      padding: 15px 40px;
+      font-size: 1.2rem;
       border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      background-color: rgba(255, 255, 255, 0.9);
-    }
-
-    .submit-button {
-      padding: 12px;
-      background-color: #f9d56e;
-      color: #2c3e50;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      font-weight: 600;
+      border-radius: 50px;
       cursor: pointer;
-      transition: background-color 0.3s;
-      margin-top: 10px;
-    }
-
-    .submit-button:hover {
-      background-color: #e6c259;
-    }
-
-    .switch-mode {
-      margin-top: 20px;
-      font-size: 14px;
-    }
-
-    .switch-mode a {
-      color: #f9d56e;
-      text-decoration: none;
+      transition: all 0.3s ease;
       font-weight: 600;
     }
 
-    .guest-option {
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px solid rgba(255, 255, 255, 0.3);
+    .cover-button.primary {
+      background-color: #e67e22;
+      color: white;
     }
 
-    .guest-button {
+    .cover-button.primary:hover {
+      background-color: #d35400;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .cover-button.secondary {
       background-color: transparent;
-      border: 2px solid #f9d56e;
-      color: #f9d56e;
-      padding: 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s;
-      width: 100%;
+      color: white;
+      border: 2px solid white;
     }
 
-    .guest-button:hover {
-      background-color: #f9d56e;
+    .cover-button.secondary:hover {
+      background-color: white;
       color: #2c3e50;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .main-app {
+    .cover-button.guest {
+      background-color: transparent;
+      color: #e67e22;
+      border: 2px solid #e67e22;
+    }
+
+    .cover-button.guest:hover {
+      background-color: #e67e22;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 主网站样式 */
+    #main-website {
       display: none;
     }
 
     .header {
-      background-color: #4a7b9d;
+      background-color: #2c3e50;
       box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
       position: sticky;
       top: 0;
@@ -169,7 +162,7 @@
     }
 
     .brand-title span {
-      color: #f9d56e;
+      color: #e67e22;
     }
 
     .nav-menu {
@@ -193,7 +186,7 @@
     }
 
     .nav-link:hover {
-      color: #f9d56e;
+      color: #e67e22;
     }
 
     .nav-link::after {
@@ -203,7 +196,7 @@
       height: 2px;
       bottom: 0;
       left: 0;
-      background-color: #f9d56e;
+      background-color: #e67e22;
       transition: width 0.3s ease;
     }
 
@@ -219,8 +212,8 @@
 
     .auth-button {
       background-color: transparent;
-      border: 2px solid #f9d56e;
-      color: #f9d56e;
+      border: 2px solid #e67e22;
+      color: #e67e22;
       padding: 8px 16px;
       border-radius: 4px;
       font-weight: 600;
@@ -229,7 +222,7 @@
     }
 
     .auth-button:hover {
-      background-color: #f9d56e;
+      background-color: #e67e22;
       color: #2c3e50;
     }
 
@@ -239,9 +232,47 @@
       padding: 20px;
     }
 
+    /* 页面样式 */
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    #home-page.active {
+      display: block;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .back-button {
+      background-color: #f0f0f0;
+      color: #666;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-button:hover {
+      background-color: #e0e0e0;
+    }
+
     #hero {
       padding: 40px 50px;
-      background-color: #e8f4f8;
+      background-color: #f5f6fa;
       border-radius: 10px;
       margin-bottom: 40px;
     }  
@@ -279,14 +310,14 @@
     .search-input {
       flex: 1;
       padding: 12px 20px;
-      border: 2px solid #4a7b9d;
+      border: 2px solid #2c3e50;
       border-radius: 4px 0 0 4px;
       font-size: 16px;
     }
 
     .search-button {
       padding: 12px 25px;
-      background-color: #4a7b9d;
+      background-color: #2c3e50;
       color: white;
       border: none;
       border-radius: 0 4px 4px 0;
@@ -296,7 +327,7 @@
     }
 
     .search-button:hover {
-      background-color: #3a6a8d;
+      background-color: #34495e;
     }
 
     .section-title {
@@ -312,7 +343,7 @@
       display: block;
       width: 80px;
       height: 3px;
-      background-color: #f9d56e;
+      background-color: #e67e22;
       margin: 10px auto;
     }
 
@@ -372,30 +403,39 @@
     }
 
     .tag {
-      background-color: #e8f4f8;
-      color: #4a7b9d;
+      background-color: #ecf0f1;
+      color: #2c3e50;
       padding: 4px 10px;
       border-radius: 20px;
       font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .tag:hover {
+      background-color: #e67e22;
+      color: white;
     }
 
     .button {
       display: inline-block;
-      background-color: #4a7b9d;
+      background-color: #2c3e50;
       color: white;
       padding: 8px 16px;
       border-radius: 4px;
       text-decoration: none;
       font-weight: 600;
       transition: background-color 0.3s;
+      cursor: pointer;
+      border: none;
     }
 
     .button:hover {
-      background-color: #3a6a8d;
+      background-color: #34495e;
     }
 
     .upload-section {
-      background-color: #e8f4f8;
+      background-color: #f5f6fa;
       padding: 30px;
       border-radius: 8px;
       margin: 40px 0;
@@ -403,8 +443,8 @@
     }
 
     .upload-button {
-      background-color: #f9d56e;
-      color: #2c3e50;
+      background-color: #e67e22;
+      color: white;
       padding: 12px 25px;
       border: none;
       border-radius: 4px;
@@ -415,267 +455,7 @@
     }
 
     .upload-button:hover {
-      background-color: #e6c259;
-    }
-
-    .footer {
-      background-color: #2c3e50;
-      color: white;
-      padding: 40px 0;
-      margin-top: 60px;
-    }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-
-    .footer-section {
-      flex: 1;
-      min-width: 250px;
-      margin-bottom: 20px;
-    }
-
-    .footer-section h3 {
-      font-size: 18px;
-      margin-bottom: 15px;
-      color: #f9d56e;
-    }
-
-    .footer-section ul {
-      list-style: none;
-    }
-
-    .footer-section ul li {
-      margin-bottom: 10px;
-    }
-
-    .footer-section ul li a {
-      color: #ddd;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .footer-section ul li a:hover {
-      color: #f9d56e;
-    }
-
-    .copyright {
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid #3a5169;
-      margin-top: 20px;
-      color: #aaa;
-      font-size: 14px;
-    }
-
-    /* 模态框样式 */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background-color: white;
-      padding: 30px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .modal-title {
-      font-size: 24px;
-      color: #2c3e50;
-    }
-
-    .close-button {
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: #666;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #2c3e50;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 10px 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 16px;
-    }
-
-    .form-control:focus {
-      border-color: #4a7b9d;
-      outline: none;
-    }
-
-    .submit-button {
-      width: 100%;
-      padding: 12px;
-      background-color: #4a7b9d;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .submit-button:hover {
-      background-color: #3a6a8d;
-    }
-
-    .form-footer {
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    .form-footer a {
-      color: #4a7b9d;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .form-footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* 搜索结果样式 */
-    .search-results {
-      display: none;
-      margin-top: 30px;
-    }
-
-    .results-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .results-count {
-      color: #666;
-      font-size: 16px;
-    }
-
-    .no-results {
-      text-align: center;
-      padding: 40px;
-      color: #666;
-    }
-
-    .no-results i {
-      font-size: 48px;
-      margin-bottom: 15px;
-      color: #ddd;
-    }
-
-    /* 页面通用样式 */
-    .popular-books-page,
-    .categories-page,
-    .upload-page,
-    .book-detail-page,
-    .popular-tags-page {
-      display: none;
-    }
-
-    .page-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .back-button {
-      background-color: #f0f0f0;
-      color: #666;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .back-button:hover {
-      background-color: #e0e0e0;
-    }
-
-    /* 分类页面样式 */
-    .categories-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 25px;
-      padding: 20px 0;
-    }
-
-    .category-card {
-      background-color: white;
-      border-radius: 8px;
-      padding: 25px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-
-    .category-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .category-icon {
-      font-size: 48px;
-      color: #4a7b9d;
-      margin-bottom: 15px;
-    }
-
-    .category-card h3 {
-      font-size: 20px;
-      color: #2c3e50;
-      margin-bottom: 10px;
-    }
-
-    .category-card p {
-      color: #666;
-      font-size: 14px;
+      background-color: #d35400;
     }
 
     /* 上传页面样式 */
@@ -713,12 +493,12 @@
     }
 
     .file-upload:hover {
-      border-color: #4a7b9d;
+      border-color: #2c3e50;
     }
 
     .file-upload i {
       font-size: 40px;
-      color: #4a7b9d;
+      color: #2c3e50;
       margin-bottom: 10px;
     }
 
@@ -767,12 +547,12 @@
     }
 
     .tag-input:focus-within {
-      border-color: #4a7b9d;
+      border-color: #2c3e50;
     }
 
     .tag-item {
-      background-color: #e8f4f8;
-      color: #4a7b9d;
+      background-color: #ecf0f1;
+      color: #2c3e50;
       padding: 4px 10px;
       border-radius: 20px;
       font-size: 14px;
@@ -785,7 +565,7 @@
       background: none;
       border: none;
       cursor: pointer;
-      color: #4a7b9d;
+      color: #2c3e50;
       font-size: 14px;
       padding: 0;
       width: 16px;
@@ -842,7 +622,7 @@
 
     .progress-fill {
       height: 100%;
-      background-color: #4a7b9d;
+      background-color: #2c3e50;
       width: 0%;
       transition: width 0.3s;
     }
@@ -878,127 +658,571 @@
       color: #e74c3c;
     }
 
-    /* 书本详情页样式 */
-    .book-detail {
+    /* 热门标签页面样式 */
+    .tags-page-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .tag-card {
       background-color: white;
-      padding: 30px;
       border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .tag-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .tag-icon {
+      font-size: 48px;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .tag-card h3 {
+      font-size: 20px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .tag-count {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* 搜索结果页面样式 */
+    .search-results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .results-count {
+      color: #666;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+      grid-column: 1 / -1;
+    }
+
+    .no-results i {
+      font-size: 64px;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
+
+    .no-results p {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    /* 图书详情页样式 */
+    .book-detail-container {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
       margin-bottom: 40px;
     }
 
     .book-detail-header {
       display: flex;
-      gap: 30px;
-      margin-bottom: 30px;
+      gap: 40px;
+      padding: 40px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-bottom: 1px solid #e9ecef;
     }
 
-    .book-cover {
-      flex: 0 0 250px;
+    .book-cover-large {
+      flex: 0 0 300px;
+      text-align: center;
     }
 
-    .book-cover img {
+    .book-cover-large img {
       width: 100%;
+      max-width: 280px;
       height: auto;
-      border-radius: 4px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .book-cover-large img:hover {
+      transform: translateY(-5px);
     }
 
     .book-info {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    .book-title {
-      font-size: 28px;
+    .book-title-large {
+      font-size: 36px;
       color: #2c3e50;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      font-weight: 700;
+      line-height: 1.2;
     }
 
-    .book-author {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 15px;
+    .book-author-large {
+      font-size: 22px;
+      color: #6c757d;
+      margin-bottom: 25px;
+      font-weight: 500;
     }
 
     .book-meta {
       display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
+      gap: 30px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
     }
 
     .book-meta-item {
       display: flex;
       align-items: center;
-      gap: 5px;
-      color: #666;
+      gap: 8px;
+      color: #495057;
+      font-size: 16px;
+      background: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .book-meta-item i {
+      color: #2c3e50;
     }
 
     .book-description {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       line-height: 1.8;
+      font-size: 16px;
+      color: #495057;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     }
 
     .book-actions {
       display: flex;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 15px;
+      margin-top: auto;
     }
 
     .action-button {
-      padding: 8px 16px;
-      border: 1px solid #4a7b9d;
-      border-radius: 4px;
+      padding: 12px 24px;
+      border: 2px solid #2c3e50;
+      border-radius: 8px;
       background-color: white;
-      color: #4a7b9d;
+      color: #2c3e50;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
+      font-size: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .action-button:hover {
-      background-color: #4a7b9d;
+      background-color: #2c3e50;
       color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(44, 62, 80, 0.3);
     }
 
     .action-button.primary {
-      background-color: #4a7b9d;
+      background-color: #2c3e50;
       color: white;
     }
 
     .action-button.primary:hover {
-      background-color: #3a6a8d;
+      background-color: #34495e;
+      border-color: #34495e;
     }
 
+    /* 评分和评论区域 */
     .book-reviews {
-      margin-top: 30px;
+      padding: 40px;
+    }
+
+    .rating-section {
+      margin-bottom: 40px;
+      padding: 30px;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+
+    .rating-overview {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .average-rating {
+      text-align: center;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      min-width: 180px;
+    }
+
+    .rating-score {
+      font-size: 48px;
+      font-weight: bold;
+      color: #e67e22;
+      margin-bottom: 10px;
+    }
+
+    .rating-stars {
+      display: flex;
+      gap: 4px;
+      margin: 15px 0;
+      justify-content: center;
+    }
+
+    .star {
+      color: #dee2e6;
+      transition: color 0.2s ease;
+      font-size: 20px;
+    }
+
+    .star.active {
+      color: #e67e22;
+    }
+
+    .user-rating {
+      flex: 1;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-rating h4 {
+      margin-bottom: 15px;
+      color: #2c3e50;
+      font-size: 20px;
+    }
+
+    /* 评论列表 */
+    .reviews-list {
+      margin-top: 40px;
+    }
+
+    .reviews-list h3 {
+      font-size: 24px;
+      color: #2c3e50;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e9ecef;
     }
 
     .review-item {
-      border-bottom: 1px solid #eee;
-      padding: 15px 0;
+      border-bottom: 1px solid #e9ecef;
+      padding: 30px 0;
+      transition: background-color 0.3s ease;
+    }
+
+    .review-item:hover {
+      background-color: #f8f9fa;
+      margin: 0 -20px;
+      padding: 30px 20px;
+      border-radius: 8px;
     }
 
     .review-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
+      align-items: center;
+      margin-bottom: 15px;
     }
 
     .review-author {
       font-weight: 600;
       color: #2c3e50;
+      font-size: 16px;
+    }
+
+    .review-rating {
+      color: #e67e22;
+      font-size: 16px;
     }
 
     .review-date {
-      color: #999;
+      color: #6c757d;
       font-size: 14px;
     }
 
     .review-content {
+      line-height: 1.7;
+      color: #495057;
+      font-size: 15px;
+    }
+
+    /* 评论表单 */
+    .review-form {
+      margin-top: 40px;
+      padding: 30px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 12px;
+      border: 1px solid #dee2e6;
+    }
+
+    .review-form h4 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      font-size: 22px;
+    }
+
+    .rating-input {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .rating-input label {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 16px;
+    }
+
+    .rating-input .rating-stars {
+      margin: 0;
+    }
+
+    .rating-input .star {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .rating-input .star:hover {
+      transform: scale(1.2);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      background: white;
+    }
+
+    .form-control:focus {
+      border-color: #2c3e50;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
       line-height: 1.6;
     }
 
-    .review-form {
+    .submit-review {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .submit-review:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(44, 62, 80, 0.3);
+    }
+
+    .submit-review:active {
+      transform: translateY(0);
+    }
+
+    .footer {
+      background-color: #2c3e50;
+      color: white;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 250px;
+      margin-bottom: 20px;
+    }
+
+    .footer-section h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #e67e22;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+      color: #ddd;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+      color: #e67e22;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #34495e;
       margin-top: 20px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    /* 模态框样式 */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 24px;
+      color: #2c3e50;
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .form-control:focus {
+      border-color: #2c3e50;
+      outline: none;
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-button:hover {
+      background-color: #34495e;
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .form-footer a {
+      color: #2c3e50;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
     }
 
     /* 用户信息样式 */
@@ -1012,7 +1236,7 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background-color: #f9d56e;
+      background-color: #e67e22;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1025,40 +1249,30 @@
       font-weight: 600;
     }
 
-    /* 热门标签页面样式 */
-    .popular-tags-page {
-      display: none;
-    }
-
-    .tag-cloud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      margin: 30px 0;
-    }
-
-    .tag-large {
-      background-color: #4a7b9d;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 25px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .tag-large:hover {
-      background-color: #3a6a8d;
-      transform: scale(1.05);
-    }
-
-    .tags-container {
-      padding: 20px 0;
-    }
-
     /* 响应式设计 */
     @media (max-width: 768px) {
+      .cover-title {
+        font-size: 2.5rem;
+      }
+      
+      .cover-subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .cover-description {
+        font-size: 1rem;
+      }
+      
+      .cover-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cover-button {
+        width: 100%;
+        max-width: 300px;
+      }
+      
       .header-content {
         flex-direction: column;
         padding: 15px 0;
@@ -1085,15 +1299,6 @@
         width: 90%;
       }
 
-      .book-detail-header {
-        flex-direction: column;
-      }
-
-      .book-cover {
-        flex: 0 0 auto;
-        margin-bottom: 20px;
-      }
-
       .form-row {
         flex-direction: column;
         gap: 0;
@@ -1103,92 +1308,130 @@
         flex-direction: column;
       }
 
-      .results-header {
+      .tags-page-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+      
+      .book-detail-header {
+        flex-direction: column;
+        padding: 25px;
+        gap: 25px;
+      }
+      
+      .book-cover-large {
+        flex: 0 0 auto;
+        margin-bottom: 0;
+      }
+      
+      .book-cover-large img {
+        max-width: 200px;
+      }
+      
+      .book-title-large {
+        font-size: 28px;
+      }
+      
+      .book-author-large {
+        font-size: 18px;
+      }
+      
+      .book-meta {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .book-meta-item {
+        justify-content: center;
+      }
+      
+      .book-actions {
+        flex-direction: column;
+      }
+      
+      .rating-overview {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+      }
+      
+      .average-rating {
+        min-width: auto;
+      }
+      
+      .search-results-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 15px;
       }
-
-      .categories-container {
-        grid-template-columns: 1fr;
+      
+      .book-reviews {
+        padding: 25px;
+      }
+      
+      .review-form {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- 登录封面页 -->
-  <div class="cover-page" id="coverPage">
-    <div class="cover-container">
-      <div class="cover-logo">Book <span>Bar</span></div>
-      <p class="cover-tagline">发现阅读的乐趣，分享与探索好书</p>
-      
-      <form class="auth-form" id="authForm">
-        <div class="form-group">
-          <label for="username">用户名</label>
-          <input type="text" id="username" class="form-control" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="password">密码</label>
-          <input type="password" id="password" class="form-control" required>
-        </div>
-        
-        <div class="form-group" id="confirmPasswordGroup" style="display: none;">
-          <label for="confirmPassword">确认密码</label>
-          <input type="password" id="confirmPassword" class="form-control">
-        </div>
-        
-        <button type="submit" class="submit-button" id="submitAuth">登录</button>
-        
-        <div class="switch-mode">
-          <a href="#" id="switchAuthMode">还没有账号？立即注册</a>
-        </div>
-        
-        <div class="guest-option">
-          <button type="button" class="guest-button" id="guestAccess">游客访问</button>
-        </div>
-      </form>
+  <!-- 封面页面 -->
+  <div id="cover-page">
+    <div class="cover-content">
+      <div class="cover-logo">
+        <i class="fas fa-book-open"></i>
+      </div>
+      <h1 class="cover-title">Book <span style="color: #e67e22;">Bar</span></h1>
+      <p class="cover-subtitle">发现阅读的乐趣，分享与探索好书</p>
+      <p class="cover-description">
+        欢迎来到Book Bar，一个专为书友打造的分享平台。在这里，您可以上传喜爱的图书，添加个性化标签，并通过关键词快速找到您想读的书籍。无论您是文学爱好者、科幻迷还是历史控，这里都有适合您的阅读宝藏。
+      </p>
+      <div class="cover-actions">
+        <button class="cover-button primary" id="registerButton">立即注册</button>
+        <button class="cover-button secondary" id="loginButton">已有账号</button>
+        <button class="cover-button guest" id="guestButton">访客体验</button>
+      </div>
     </div>
   </div>
 
-  <!-- 主应用页面 -->
-  <div class="main-app" id="mainApp">
+  <!-- 主网站内容 -->
+  <div id="main-website">
     <header class="header">
       <div class="header-container">
         <div class="header-content">
           <div class="brand">
             <h2 class="brand-title">Book <span>Bar</span></h2>
           </div>
-          
+         
           <ul class="nav-menu" id="navMenu">
             <li class="nav-item">
-              <a href="#" class="nav-link" id="homeLink">首页</a>
+              <a href="#" class="nav-link" data-page="home-page">首页</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="categoriesLink">图书分类</a>
+              <a href="#" class="nav-link" data-page="popular-page">热门书籍</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="popularLink">热门标签</a>
+              <a href="#" class="nav-link" data-page="tags-page">热门标签</a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" id="uploadLink">上传图书</a>
+              <a href="#" class="nav-link" data-page="upload-page">上传图书</a>
             </li>
           </ul>
-          
+
           <div class="user-actions">
-            <button class="auth-button" id="loginButton">登录/注册</button>
-            <div class="user-info" id="userInfo" style="display: none;">
+            <div class="user-info" id="userInfo">
               <div class="user-avatar" id="userAvatar">U</div>
-              <span class="user-name" id="userName">用户名</span>
+              <span class="user-name" id="userName">用户</span>
             </div>
+            <button class="auth-button" id="logoutButton">退出登录</button>
           </div>
         </div>
       </div>
     </header>
 
     <div id="main-content">
-      <!-- 首页内容 -->
-      <div id="home-page">
+      <!-- 首页 -->
+      <div id="home-page" class="page active">
         <div id="hero">
           <h1>发现阅读的乐趣<br/>在Book Bar分享与探索好书</h1>
           <p>欢迎来到Book Bar，一个专为书友打造的分享平台。在这里，您可以上传喜爱的图书，添加个性化标签，并通过关键词快速找到您想读的书籍。无论您是文学爱好者、科幻迷还是历史控，这里都有适合您的阅读宝藏。</p>
@@ -1210,137 +1453,96 @@
         <div class="upload-section">
           <h2>分享您喜爱的图书</h2>
           <p>上传您想推荐的图书，添加标签，与其他书友分享阅读的快乐</p>
-          <button class="upload-button" id="showUploadForm">上传图书</button>
+          <button class="upload-button" data-page="upload-page">上传图书</button>
         </div>
         
         <h2 class="section-title">热门标签</h2>
         
         <div class="tags" style="justify-content: center; margin: 20px 0;">
-          <span class="tag">科幻</span>
-          <span class="tag">文学</span>
-          <span class="tag">悬疑</span>
-          <span class="tag">历史</span>
-          <span class="tag">心理学</span>
-          <span class="tag">哲学</span>
-          <span class="tag">传记</span>
-          <span class="tag">经典</span>
-          <span class="tag">当代文学</span>
-          <span class="tag">推理</span>
+          <span class="tag" data-tag="科幻">科幻</span>
+          <span class="tag" data-tag="文学">文学</span>
+          <span class="tag" data-tag="悬疑">悬疑</span>
+          <span class="tag" data-tag="历史">历史</span>
+          <span class="tag" data-tag="心理学">心理学</span>
+          <span class="tag" data-tag="哲学">哲学</span>
+          <span class="tag" data-tag="传记">传记</span>
+          <span class="tag" data-tag="经典">经典</span>
+          <span class="tag" data-tag="当代文学">当代文学</span>
+          <span class="tag" data-tag="推理">推理</span>
         </div>
       </div>
 
-      <!-- 搜索结果页面 -->
-      <div id="searchResults" class="search-results">
+      <!-- 热门书籍页面 -->
+      <div id="popular-page" class="page">
         <div class="page-header">
-          <button class="back-button" id="backFromSearch">
+          <button class="back-button" data-page="home-page">
             <i class="fas fa-arrow-left"></i> 返回首页
           </button>
-          <h2 class="section-title">搜索结果</h2>
-          <span class="results-count" id="resultsCount">找到 0 个结果</span>
+          <h2 class="section-title">热门书籍</h2>
         </div>
         
-        <div class="grid-container" id="searchResultsGrid"></div>
-        <div class="no-results" id="noResults" style="display: none;">
-          <i class="fas fa-search"></i>
-          <p>没有找到相关书籍</p>
-        </div>
-      </div>
-
-      <!-- 图书分类页面 -->
-      <div id="categoriesPage" class="categories-page">
-        <div class="page-header">
-          <button class="back-button" id="backFromCategories">
-            <i class="fas fa-arrow-left"></i> 返回首页
-          </button>
-          <h2 class="section-title">图书分类</h2>
-          <div></div> <!-- 占位元素 -->
-        </div>
-        
-        <div class="categories-container">
-          <div class="category-card" data-category="fiction">
-            <div class="category-icon">📚</div>
-            <h3>文学小说</h3>
-            <p>经典与当代文学作品</p>
-          </div>
-          <div class="category-card" data-category="scifi">
-            <div class="category-icon">🚀</div>
-            <h3>科幻奇幻</h3>
-            <p>探索想象力的边界</p>
-          </div>
-          <div class="category-card" data-category="mystery">
-            <div class="category-icon">🕵️</div>
-            <h3>悬疑推理</h3>
-            <p>解开谜题，寻找真相</p>
-          </div>
-          <div class="category-card" data-category="history">
-            <div class="category-icon">📜</div>
-            <h3>历史传记</h3>
-            <p>了解过去，启迪未来</p>
-          </div>
-          <div class="category-card" data-category="science">
-            <div class="category-icon">🔬</div>
-            <h3>科普读物</h3>
-            <p>探索科学的世界</p>
-          </div>
-          <div class="category-card" data-category="philosophy">
-            <div class="category-icon">💭</div>
-            <h3>哲学心理</h3>
-            <p>思考人生与心灵</p>
-          </div>
+        <div class="grid-container" id="popularBooksGrid">
+          <!-- 热门书籍将通过JavaScript动态生成 -->
         </div>
       </div>
 
       <!-- 热门标签页面 -->
-      <div id="popularTagsPage" class="popular-tags-page">
+      <div id="tags-page" class="page">
         <div class="page-header">
-          <button class="back-button" id="backFromTags">
+          <button class="back-button" data-page="home-page">
             <i class="fas fa-arrow-left"></i> 返回首页
           </button>
           <h2 class="section-title">热门标签</h2>
-          <div></div>
         </div>
         
-        <div class="tags-container">
-          <div class="tag-cloud">
-            <span class="tag-large" data-tag="科幻">科幻</span>
-            <span class="tag-large" data-tag="文学">文学</span>
-            <span class="tag-large" data-tag="悬疑">悬疑</span>
-            <span class="tag-large" data-tag="历史">历史</span>
-            <span class="tag-large" data-tag="心理学">心理学</span>
-            <span class="tag-large" data-tag="哲学">哲学</span>
-            <span class="tag-large" data-tag="传记">传记</span>
-            <span class="tag-large" data-tag="经典">经典</span>
-            <span class="tag-large" data-tag="当代文学">当代文学</span>
-            <span class="tag-large" data-tag="推理">推理</span>
-            <span class="tag-large" data-tag="爱情">爱情</span>
-            <span class="tag-large" data-tag="成长">成长</span>
-            <span class="tag-large" data-tag="社会">社会</span>
-            <span class="tag-large" data-tag="文化">文化</span>
-            <span class="tag-large" data-tag="艺术">艺术</span>
+        <div class="tags-page-container" id="tagsContainer">
+          <!-- 标签将通过JavaScript动态生成 -->
+        </div>
+      </div>
+
+      <!-- 搜索结果页面 -->
+      <div id="search-results-page" class="page">
+        <div class="page-header">
+          <button class="back-button" data-page="home-page">
+            <i class="fas fa-arrow-left"></i> 返回首页
+          </button>
+          <div class="search-results-header">
+            <h2 class="section-title">搜索结果</h2>
+            <span class="results-count" id="resultsCount">找到 0 个结果</span>
           </div>
-          
-          <div id="tagResults" class="search-results" style="display: none;">
-            <div class="results-header">
-              <h3 id="tagResultsTitle">标签搜索结果</h3>
-              <span class="results-count" id="tagResultsCount">找到 0 个结果</span>
-            </div>
-            <div class="grid-container" id="tagResultsGrid"></div>
-            <div class="no-results" id="tagNoResults" style="display: none;">
-              <i>📚</i>
-              <p>没有找到相关书籍</p>
-            </div>
-          </div>
+        </div>
+        
+        <div class="grid-container" id="searchResultsGrid">
+          <!-- 搜索结果将通过JavaScript动态生成 -->
+        </div>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+          <i class="fas fa-search"></i>
+          <p>没有找到相关的图书</p>
+        </div>
+      </div>
+
+      <!-- 图书详情页面 -->
+      <div id="book-detail-page" class="page">
+        <div class="page-header">
+          <button class="back-button" id="backFromDetail">
+            <i class="fas fa-arrow-left"></i> 返回
+          </button>
+          <h2 class="section-title">图书详情</h2>
+        </div>
+        
+        <div class="book-detail-container" id="bookDetailContainer">
+          <!-- 图书详情内容将通过JavaScript动态生成 -->
         </div>
       </div>
 
       <!-- 上传图书页面 -->
-      <div id="uploadPage" class="upload-page">
+      <div id="upload-page" class="page">
         <div class="page-header">
-          <button class="back-button" id="backFromUpload">
+          <button class="back-button" data-page="home-page">
             <i class="fas fa-arrow-left"></i> 返回首页
           </button>
           <h2 class="section-title">上传图书</h2>
-          <div></div>
         </div>
         
         <div class="upload-form-container">
@@ -1348,56 +1550,59 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="bookTitle" class="required">书名</label>
-                <input type="text" id="bookTitle" class="form-control" required>
+                <input type="text" id="bookTitle" class="form-control" required placeholder="请输入书名">
+                <div class="form-hint">请输入完整的书名</div>
               </div>
               <div class="form-group">
                 <label for="bookAuthor" class="required">作者</label>
-                <input type="text" id="bookAuthor" class="form-control" required>
+                <input type="text" id="bookAuthor" class="form-control" required placeholder="请输入作者姓名">
+                <div class="form-hint">可以输入多位作者，用逗号分隔</div>
               </div>
             </div>
             
             <div class="form-row">
               <div class="form-group">
                 <label for="bookPublisher">出版社</label>
-                <input type="text" id="bookPublisher" class="form-control">
+                <input type="text" id="bookPublisher" class="form-control" placeholder="请输入出版社名称">
               </div>
               <div class="form-group">
                 <label for="bookYear">出版年份</label>
-                <input type="number" id="bookYear" class="form-control" min="1900" max="2023">
+                <input type="number" id="bookYear" class="form-control" min="1900" max="2023" placeholder="例如：2020">
               </div>
             </div>
             
             <div class="form-group">
               <label for="bookDescription" class="required">内容简介</label>
-              <textarea id="bookDescription" class="form-control" rows="4" required></textarea>
-              <div class="form-hint">至少需要20个字符</div>
+              <textarea id="bookDescription" class="form-control" required placeholder="请简要描述这本书的内容..."></textarea>
+              <div class="form-hint">建议字数在100-500字之间</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="bookTags">标签</label>
+              <div class="tag-input-container">
+                <div class="tag-input" id="tagInput">
+                  <input type="text" class="tag-input-field" id="tagInputField" placeholder="输入标签后按回车添加">
+                </div>
+              </div>
+              <div class="form-hint">添加相关标签，方便其他用户搜索（最多10个）</div>
             </div>
             
             <div class="form-group">
               <label>图书封面</label>
               <div class="file-upload" id="fileUploadArea">
-                <i>📁</i>
-                <p>点击上传图书封面图片</p>
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>点击或拖拽上传图片</p>
+                <p class="form-hint">支持 JPG、PNG 格式，大小不超过 5MB</p>
                 <input type="file" id="bookCover" accept="image/*">
               </div>
               <div class="image-preview" id="imagePreview">
-                <img id="previewImage" src="" alt="预览图片">
-                <button type="button" id="removeImage">移除图片</button>
+                <img id="previewImage" src="" alt="预览图">
+                <button type="button" id="removeImage" class="button" style="margin-top: 10px;">移除图片</button>
               </div>
-            </div>
-            
-            <div class="form-group">
-              <label>标签</label>
-              <div class="tag-input-container">
-                <div class="tag-input" id="tagInput">
-                  <input type="text" id="tagInputField" class="tag-input-field" placeholder="输入标签后按回车添加">
-                </div>
-              </div>
-              <div class="form-hint">最多可添加10个标签，按回车键添加</div>
             </div>
             
             <div class="form-actions">
-              <button type="button" class="cancel-button" id="cancelUpload">取消</button>
+              <button type="button" class="cancel-button" data-page="home-page">取消</button>
               <button type="submit" class="submit-button">上传图书</button>
             </div>
             
@@ -1405,15 +1610,15 @@
               <div class="progress-bar">
                 <div class="progress-fill" id="progressFill"></div>
               </div>
-              <div class="progress-text" id="progressText">0%</div>
+              <p>上传中... <span id="progressText">0%</span></p>
             </div>
             
             <div class="success-message" id="successMessage">
-              <p>图书上传成功！</p>
+              <i class="fas fa-check-circle"></i> 图书上传成功！
             </div>
             
             <div class="error-message" id="errorMessage">
-              <p id="errorText">上传失败，请重试</p>
+              <i class="fas fa-exclamation-circle"></i> <span id="errorText">上传失败，请重试</span>
             </div>
           </form>
         </div>
@@ -1429,10 +1634,10 @@
         <div class="footer-section">
           <h3>快速链接</h3>
           <ul>
-            <li><a href="#" id="footerHomeLink">首页</a></li>
-            <li><a href="#" id="footerCategoriesLink">图书分类</a></li>
-            <li><a href="#" id="footerPopularLink">热门标签</a></li>
-            <li><a href="#" id="footerUploadLink">上传图书</a></li>
+            <li><a href="#" data-page="home-page">首页</a></li>
+            <li><a href="#" data-page="popular-page">热门书籍</a></li>
+            <li><a href="#" data-page="tags-page">热门标签</a></li>
+            <li><a href="#" data-page="upload-page">上传图书</a></li>
           </ul>
         </div>
         <div class="footer-section">
@@ -1450,501 +1655,468 @@
     </footer>
   </div>
 
-  <script>
-    // 示例书籍数据
-    const books = [
-      {
-        id: 1,
-        title: "三体",
-        author: "刘慈欣",
-        description: "刘慈欣的科幻巨著，讲述了地球人类文明和三体文明的信息交流、生死搏杀及两个文明在宇宙中的兴衰历程。小说以气势宏大的叙事和深刻的哲学思考著称，是中国科幻文学的里程碑之作。",
-        tags: ["科幻", "刘慈欣", "雨果奖", "硬科幻"],
-        cover: "images/three-body.jpg",
-        publisher: "重庆出版社",
-        year: 2008,
-        rating: 4.8,
-        isPopular: true,
-        category: "scifi"
-      },
-      {
-        id: 2,
-        title: "活着",
-        author: "余华",
-        description: "余华的代表作，讲述了一个人历尽世间沧桑和磨难的一生，亦将中国大半个世纪的社会变迁凝缩其间。小说以朴素的语言和深刻的情感打动无数读者，展现了生命的坚韧与尊严。",
-        tags: ["文学", "余华", "人生", "当代文学"],
-        cover: "images/to-live.jpg",
-        publisher: "作家出版社",
-        year: 1993,
-        rating: 4.7,
-        isPopular: true,
-        category: "fiction"
-      },
-      {
-        id: 3,
-        title: "百年孤独",
-        author: "加西亚·马尔克斯",
-        description: "加西亚·马尔克斯创作的长篇小说，是魔幻现实主义的经典作品，描写了布恩迪亚家族七代人的传奇故事。小说以其独特的叙事风格和丰富的想象力，成为世界文学的瑰宝。",
-        tags: ["魔幻现实主义", "马尔克斯", "诺贝尔奖", "拉美文学"],
-        cover: "images/hundred-loneliness.jpg",
-        publisher: "南海出版公司",
-        year: 1967,
-        rating: 4.9,
-        isPopular: true,
-        category: "fiction"
-      },
-      {
-        id: 4,
-        title: "小王子",
-        author: "安托万·德·圣-埃克苏佩里",
-        description: "法国作家安托万·德·圣-埃克苏佩里创作的著名儿童文学短篇小说，以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中所经历的各种冒险。",
-        tags: ["童话", "哲理", "法国文学", "经典"],
-        cover: "images/the-little-prince.jpg",
-        publisher: "人民文学出版社",
-        year: 1943,
-        rating: 4.8,
-        isPopular: true,
-        category: "fiction"
-      },
-      {
-        id: 5,
-        title: "1984",
-        author: "乔治·奥威尔",
-        description: "英国作家乔治·奥威尔创作的一部反乌托邦小说，刻画了一个令人感到窒息的恐怖世界。小说对极权主义政权和监控社会的描绘具有深刻的警示意义。",
-        tags: ["反乌托邦", "政治小说", "乔治·奥威尔", "经典"],
-        cover: "images/1984.jpg",
-        publisher: "辽宁人民出版社",
-        year: 1949,
-        rating: 4.7,
-        isPopular: false,
-        category: "fiction"
-      },
-      {
-        id: 6,
-        title: "红楼梦",
-        author: "曹雪芹",
-        description: "中国古典四大名著之首，清代作家曹雪芹创作的章回体长篇小说，以贾、史、王、薛四大家族的兴衰为背景，以贾宝玉、林黛玉、薛宝钗的爱情婚姻故事为主线，描绘了一批举止见识出于须眉之上的闺阁佳人的人生百态。",
-        tags: ["古典文学", "四大名著", "曹雪芹", "经典"],
-        cover: "images/reddream.jpg",
-        publisher: "人民文学出版社",
-        year: 1791,
-        rating: 4.9,
-        isPopular: true,
-        category: "fiction"
-      },
-      {
-        id: 7,
-        title: "追风筝的人",
-        author: "卡勒德·胡赛尼",
-        description: "美籍阿富汗作家卡勒德·胡赛尼的第一部长篇小说，讲述了一个关于友谊、背叛和救赎的故事。小说以阿富汗的历史变迁为背景，情感真挚动人。",
-        tags: ["文学", "友谊", "救赎", "外国文学"],
-        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4=",
-        publisher: "上海人民出版社",
-        year: 2003,
-        rating: 4.6,
-        isPopular: false,
-        category: "fiction"
-      },
-      {
-        id: 8,
-        title: "人类简史",
-        author: "尤瓦尔·赫拉利",
-        description: "以色列历史学家尤瓦尔·赫拉利创作的历史类著作，讲述了从十万年前有生命迹象开始到21世纪资本、科技交织的人类发展史。",
-        tags: ["历史", "科普", "人类学", "社会学"],
-        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4=",
-        publisher: "中信出版社",
-        year: 2014,
-        rating: 4.7,
-        isPopular: true,
-        category: "science"
-      },
-      {
-        id: 9,
-        title: "白夜行",
-        author: "东野圭吾",
-        description: "日本作家东野圭吾创作的长篇小说，讲述了一对有着悲惨命运的少年少女，19年来以相当残酷、孤独、单纯的灵魂相爱却无法相守的故事。",
-        tags: ["悬疑", "推理", "东野圭吾", "日本文学"],
-        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4=",
-        publisher: "南海出版公司",
-        year: 1999,
-        rating: 4.8,
-        isPopular: false,
-        category: "mystery"
-      },
-      {
-        id: 10,
-        title: "沉思录",
-        author: "马可·奥勒留",
-        description: "古罗马皇帝马可·奥勒留所著的哲学随笔集，是斯多葛派哲学的重要典籍。书中阐述了作者对自然、人生、社会的深刻思考。",
-        tags: ["哲学", "古典", "斯多葛", "人生思考"],
-        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4=",
-        publisher: "中央编译出版社",
-        year: 180,
-        rating: 4.5,
-        isPopular: false,
-        category: "philosophy"
-      }
-    ];
-
-    // 当前用户状态
-    let currentUser = null;
-    let isLoginMode = true;
-    let currentPage = 'home';
-    let selectedTags = [];
-
-    // DOM元素
-    const coverPage = document.getElementById('coverPage');
-    const mainApp = document.getElementById('mainApp');
-    const authForm = document.getElementById('authForm');
-    const submitAuth = document.getElementById('submitAuth');
-    const switchAuthMode = document.getElementById('switchAuthMode');
-    const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
-    const guestAccess = document.getElementById('guestAccess');
-    const loginButton = document.getElementById('loginButton');
-    const userInfo = document.getElementById('userInfo');
-    const userAvatar = document.getElementById('userAvatar');
-    const userName = document.getElementById('userName');
-    const booksGrid = document.getElementById('booksGrid');
-    const searchInput = document.getElementById('searchInput');
-    const searchButton = document.getElementById('searchButton');
-    const searchResults = document.getElementById('searchResults');
-    const searchResultsGrid = document.getElementById('searchResultsGrid');
-    const resultsCount = document.getElementById('resultsCount');
-    const noResults = document.getElementById('noResults');
-    const homePage = document.getElementById('home-page');
-    const homeLink = document.getElementById('homeLink');
-    const footerHomeLink = document.getElementById('footerHomeLink');
-    const categoriesPage = document.getElementById('categoriesPage');
-    const categoriesLink = document.getElementById('categoriesLink');
-    const footerCategoriesLink = document.getElementById('footerCategoriesLink');
-    const popularTagsPage = document.getElementById('popularTagsPage');
-    const popularLink = document.getElementById('popularLink');
-    const footerPopularLink = document.getElementById('footerPopularLink');
-    const uploadPage = document.getElementById('uploadPage');
-    const uploadLink = document.getElementById('uploadLink');
-    const footerUploadLink = document.getElementById('footerUploadLink');
-    const bookUploadForm = document.getElementById('bookUploadForm');
-    const backFromSearch = document.getElementById('backFromSearch');
-    const backFromCategories = document.getElementById('backFromCategories');
-    const backFromTags = document.getElementById('backFromTags');
-    const backFromUpload = document.getElementById('backFromUpload');
-    const fileUploadArea = document.getElementById('fileUploadArea');
-    const bookCover = document.getElementById('bookCover');
-    const tagInput = document.getElementById('tagInput');
-    const tagInputField = document.getElementById('tagInputField');
-    const imagePreview = document.getElementById('imagePreview');
-    const previewImage = document.getElementById('previewImage');
-    const removeImage = document.getElementById('removeImage');
-    const cancelUpload = document.getElementById('cancelUpload');
-    const uploadProgress = document.getElementById('uploadProgress');
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
-    const successMessage = document.getElementById('successMessage');
-    const errorMessage = document.getElementById('errorMessage');
-    const errorText = document.getElementById('errorText');
-    const showUploadForm = document.getElementById('showUploadForm');
-    const categoryCards = document.querySelectorAll('.category-card');
-    const tagCloud = document.querySelectorAll('.tag-large');
-    const tagResults = document.getElementById('tagResults');
-    const tagResultsTitle = document.getElementById('tagResultsTitle');
-    const tagResultsCount = document.getElementById('tagResultsCount');
-    const tagResultsGrid = document.getElementById('tagResultsGrid');
-    const tagNoResults = document.getElementById('tagNoResults');
-
-    // 初始化页面
-    document.addEventListener('DOMContentLoaded', function() {
-      // 检查登录状态
-      const savedUser = localStorage.getItem('currentUser');
-      if (!savedUser) {
-        coverPage.style.display = 'flex';
-        mainApp.style.display = 'none';
-      } else {
-        currentUser = savedUser;
-        coverPage.style.display = 'none';
-        mainApp.style.display = 'block';
-        updateUserInterface();
-        renderBooks();
-        setupEventListeners();
-      }
-    });
-
-    // 渲染书籍列表
-    function renderBooks() {
-      booksGrid.innerHTML = '';
-      
-      // 只显示热门书籍
-      const popularBooks = books.filter(book => book.isPopular);
-      
-      popularBooks.forEach(book => {
-        const bookCard = createBookCard(book);
-        booksGrid.appendChild(bookCard);
-      });
-    }
-
-    // 创建书籍卡片
-    function createBookCard(book) {
-      const bookCard = document.createElement('div');
-      bookCard.className = 'book-card';
-      bookCard.setAttribute('data-id', book.id);
-      bookCard.innerHTML = `
-        <img src="${book.cover}" alt="${book.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4='">
-        <h3>${book.title}</h3>
-        <p>${book.description.substring(0, 100)}...</p>
-        <div class="tags">
-          ${book.tags.slice(0, 3).map(tag => `<span class="tag">${tag}</span>`).join('')}
+  <!-- 登录/注册模态框 -->
+  <div class="modal" id="authModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">注册</h2>
+        <button class="close-button" id="closeModal">&times;</button>
+      </div>
+      <form id="authForm">
+        <div class="form-group">
+          <label for="username">用户名</label>
+          <input type="text" id="username" class="form-control" required>
         </div>
-        <a href="#" class="button view-detail" data-id="${book.id}">查看详情</a>
-      `;
-      return bookCard;
-    }
+        <div class="form-group">
+          <label for="email">邮箱</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="password">密码</label>
+          <input type="password" id="password" class="form-control" required>
+        </div>
+        <div class="form-group" id="confirmPasswordGroup">
+          <label for="confirmPassword">确认密码</label>
+          <input type="password" id="confirmPassword" class="form-control">
+        </div>
+        <button type="submit" class="submit-button" id="authSubmit">注册</button>
+        <div class="form-footer">
+          <p id="authSwitch">已有账号？<a href="#" id="switchAuth">立即登录</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
 
-    // 设置事件监听器
-    function setupEventListeners() {
-      // 登录/注册按钮
+  <script>
+    // 封面页面功能
+    document.addEventListener('DOMContentLoaded', function() {
+      // 获取封面页面和按钮
+      const coverPage = document.getElementById('cover-page');
+      const registerButton = document.getElementById('registerButton');
+      const loginButton = document.getElementById('loginButton');
+      const guestButton = document.getElementById('guestButton');
+      const mainWebsite = document.getElementById('main-website');
+      const authModal = document.getElementById('authModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const authSwitch = document.getElementById('switchAuth');
+      const authForm = document.getElementById('authForm');
+      const authSubmit = document.getElementById('authSubmit');
+      const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+      const closeModal = document.getElementById('closeModal');
+      const userAvatar = document.getElementById('userAvatar');
+      const userName = document.getElementById('userName');
+      const logoutButton = document.getElementById('logoutButton');
+      
+      // 初始化页面状态
+      let isLoginMode = false;
+      
+      // 注册按钮点击事件
+      registerButton.addEventListener('click', function() {
+        isLoginMode = false;
+        modalTitle.textContent = '注册';
+        authSubmit.textContent = '注册';
+        authSwitch.textContent = '已有账号？';
+        confirmPasswordGroup.style.display = 'block';
+        authModal.style.display = 'flex';
+      });
+      
+      // 登录按钮点击事件
       loginButton.addEventListener('click', function() {
-        if (currentUser) {
-          // 如果已登录，显示用户菜单或执行登出
-          if (confirm('确定要退出登录吗？')) {
-            logout();
-          }
-        } else {
-          // 显示登录页面
-          coverPage.style.display = 'flex';
-          mainApp.style.display = 'none';
-        }
+        isLoginMode = true;
+        modalTitle.textContent = '登录';
+        authSubmit.textContent = '登录';
+        authSwitch.textContent = '没有账号？';
+        confirmPasswordGroup.style.display = 'none';
+        authModal.style.display = 'flex';
+      });
+      
+      // 访客按钮点击事件 - 修复：直接进入主网站
+      guestButton.addEventListener('click', function() {
+        coverPage.classList.add('hidden');
+        mainWebsite.style.display = 'block';
+        // 设置访客用户信息
+        userAvatar.textContent = 'G';
+        userName.textContent = '访客';
+        // 初始化书籍数据
+        initializeBooks();
+        // 初始化搜索功能
+        setupSearchFunctionality();
       });
       
       // 切换登录/注册模式
-      switchAuthMode.addEventListener('click', function(e) {
+      authSwitch.addEventListener('click', function(e) {
         e.preventDefault();
         isLoginMode = !isLoginMode;
         
         if (isLoginMode) {
-          submitAuth.textContent = '登录';
-          switchAuthMode.textContent = '还没有账号？立即注册';
+          modalTitle.textContent = '登录';
+          authSubmit.textContent = '登录';
+          authSwitch.textContent = '没有账号？';
           confirmPasswordGroup.style.display = 'none';
         } else {
-          submitAuth.textContent = '注册';
-          switchAuthMode.textContent = '已有账号？立即登录';
+          modalTitle.textContent = '注册';
+          authSubmit.textContent = '注册';
+          authSwitch.textContent = '已有账号？';
           confirmPasswordGroup.style.display = 'block';
         }
       });
       
-      // 处理认证表单提交
+      // 关闭模态框
+      closeModal.addEventListener('click', function() {
+        authModal.style.display = 'none';
+      });
+      
+      // 表单提交
       authForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
         const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
+        
+        // 简单验证
+        if (!username || !email || !password) {
+          alert('请填写所有必填字段');
+          return;
+        }
         
         if (!isLoginMode) {
           const confirmPassword = document.getElementById('confirmPassword').value;
-          
           if (password !== confirmPassword) {
-            alert('两次输入的密码不一致！');
+            alert('两次输入的密码不一致');
             return;
           }
-          
-          // 模拟注册
-          currentUser = username;
-          localStorage.setItem('currentUser', username);
-          
-          alert('注册成功！');
-        } else {
-          // 模拟登录
-          currentUser = username;
-          localStorage.setItem('currentUser', username);
-          
-          alert('登录成功！');
         }
         
-        coverPage.style.display = 'none';
-        mainApp.style.display = 'block';
-        updateUserInterface();
-        renderBooks();
-        setupEventListeners();
+        // 模拟登录/注册成功
+        userAvatar.textContent = username.charAt(0).toUpperCase();
+        userName.textContent = username;
+        
+        // 关闭模态框和封面页面
+        authModal.style.display = 'none';
+        coverPage.classList.add('hidden');
+        mainWebsite.style.display = 'block';
+        
+        alert(isLoginMode ? '登录成功！' : '注册成功！');
+        
+        // 初始化书籍数据
+        initializeBooks();
+        // 初始化搜索功能
+        setupSearchFunctionality();
       });
       
-      // 游客访问
-      guestAccess.addEventListener('click', function() {
-        currentUser = 'guest';
-        localStorage.setItem('currentUser', 'guest');
-        coverPage.style.display = 'none';
-        mainApp.style.display = 'block';
-        updateUserInterface();
-        renderBooks();
-        setupEventListeners();
+      // 退出登录
+      logoutButton.addEventListener('click', function() {
+        if (confirm('确定要退出登录吗？')) {
+          coverPage.classList.remove('hidden');
+          mainWebsite.style.display = 'none';
+        }
       });
       
-      // 搜索功能
+      // 页面导航功能
+      const navLinks = document.querySelectorAll('.nav-link, .back-button, .upload-button, .cancel-button');
+      const pages = document.querySelectorAll('.page');
+      
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetPage = this.getAttribute('data-page');
+          
+          if (targetPage) {
+            pages.forEach(page => {
+              page.classList.remove('active');
+            });
+            
+            document.getElementById(targetPage).classList.add('active');
+            
+            // 如果切换到热门书籍页面，重新渲染
+            if (targetPage === 'popular-page') {
+              renderPopularBooks();
+            }
+          }
+        });
+      });
+      
+      // 初始化标签页面
+      initializeTags();
+      
+      // 首页标签点击事件
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('tag') && e.target.hasAttribute('data-tag')) {
+          const tag = e.target.getAttribute('data-tag');
+          document.getElementById('searchInput').value = tag;
+          performSearch();
+        }
+      });
+
+      // 为书籍卡片添加点击事件
+      document.addEventListener('click', function(e) {
+        // 点击书籍卡片查看详情
+        if (e.target.closest('.book-card')) {
+          const bookCard = e.target.closest('.book-card');
+          const bookId = parseInt(bookCard.getAttribute('data-id') || '1');
+          showBookDetail(bookId);
+        }
+        
+        // 点击查看详情按钮
+        if (e.target.classList.contains('view-detail-btn')) {
+          const bookId = parseInt(e.target.getAttribute('data-id'));
+          showBookDetail(bookId);
+        }
+      });
+      
+      // 设置返回按钮
+      document.getElementById('backFromDetail').addEventListener('click', function() {
+        const previousPage = localStorage.getItem('previousPage') || 'home-page';
+        showPage(previousPage);
+      });
+    });
+    
+    // 初始化书籍数据
+    function initializeBooks() {
+      const books = [
+        {
+          id: 1,
+          title: '三体',
+          author: '刘慈欣',
+          description: '《三体》是刘慈欣创作的系列长篇科幻小说，讲述了地球人类文明和三体文明的信息交流、生死搏杀及两个文明在宇宙中的兴衰历程。小说以气势宏大的叙事和深刻的哲学思考著称，是中国科幻文学的里程碑之作。其第一部经过刘宇昆翻译后获得了第73届雨果奖最佳长篇小说奖。',
+          tags: ['科幻', '小说', '中国文学'],
+          image: 'images/three-body.jpg',
+          publisher: '重庆出版社',
+          year: 2008,
+          rating: 4.8,
+          reviews: [
+            { user: '科幻迷', rating: 5, comment: '震撼人心的科幻巨作！', date: '2023-01-15' },
+            { user: '书虫', rating: 4, comment: '想象力丰富，但有些部分比较晦涩', date: '2023-02-20' }
+          ]
+        },
+        {
+          id: 2,
+          title: '活着',
+          author: '余华',
+          description: '《活着》是作家余华的代表作之一，讲述了在大时代背景下，随着内战、三反五反、大跃进、文化大革命等社会变革，徐福贵的人生和家庭不断经受着苦难，到了最后所有亲人都先后离他而去，仅剩下年老的他和一头老牛相依为命。',
+          tags: ['文学', '中国文学', '经典'],
+          image: 'images/to-live.jpg',
+          publisher: '作家出版社',
+          year: 1993,
+          rating: 4.7,
+          reviews: [
+            { user: '文学爱好者', rating: 5, comment: '感人至深，让人思考生命的意义', date: '2023-03-10' }
+          ]
+        },
+        {
+          id: 3,
+          title: '百年孤独',
+          author: '加西亚·马尔克斯',
+          description: '《百年孤独》是哥伦比亚作家加西亚·马尔克斯创作的长篇小说，是魔幻现实主义的代表作，描写了布恩迪亚家族七代人的传奇故事。',
+          tags: ['文学', '魔幻现实主义', '经典'],
+          image: 'images/hundred-loneliness.jpg',
+          publisher: '南海出版公司',
+          year: 1967,
+          rating: 4.9,
+          reviews: [
+            { user: '文学评论家', rating: 5, comment: '魔幻现实主义的巅峰之作', date: '2023-04-05' }
+          ]
+        },
+        {
+          id: 4,
+          title: '小王子',
+          author: '安托万·德·圣-埃克苏佩里',
+          description: '《小王子》是法国作家安托万·德·圣-埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险。',
+          tags: ['童话', '经典', '法国文学'],
+          image: 'images/the-little-prince.jpg',
+          publisher: '人民文学出版社',
+          year: 1943,
+          rating: 4.8,
+          reviews: []
+        },
+        {
+          id: 5,
+          title: '1984',
+          author: '乔治·奥威尔',
+          description: '《1984》是英国作家乔治·奥威尔创作的一部反乌托邦小说，刻画了一个令人感到窒息的恐怖世界，在假想的未来社会中，独裁者以追逐权力为最终目标，人性被强权彻底扼杀，自由被彻底剥夺，思想受到严酷钳制，人民的生活陷入了极度贫困，下层人民的人生变成了单调乏味的循环。',
+          tags: ['反乌托邦', '政治小说', '经典'],
+          image: 'images/1984.jpg',
+          publisher: '辽宁人民出版社',
+          year: 1949,
+          rating: 4.7,
+          reviews: []
+        },
+        {
+          id: 6,
+          title: '红楼梦',
+          author: '曹雪芹',
+          description: '《红楼梦》是中国古典四大名著之首，清代作家曹雪芹创作的章回体长篇小说，以贾、史、王、薛四大家族的兴衰为背景，以贾宝玉、林黛玉、薛宝钗的爱情婚姻故事为主线，描绘了一批举止见识出于须眉之上的闺阁佳人的人生百态。',
+          tags: ['古典文学', '四大名著', '经典'],
+          image: 'images/reddream.jpg',
+          publisher: '人民文学出版社',
+          year: 1791,
+          rating: 4.9,
+          reviews: []
+        },
+        {
+          id: 7,
+          title: '追风筝的人',
+          author: '卡勒德·胡赛尼',
+          description: '《追风筝的人》是美籍阿富汗作家卡勒德·胡赛尼的第一部长篇小说，讲述了一个关于友谊、背叛和救赎的故事。小说以阿富汗的历史变迁为背景，情感真挚动人。',
+          tags: ['文学', '友谊', '救赎', '外国文学'],
+          image: 'images/kite-runner.jpg',
+          publisher: '上海人民出版社',
+          year: 2003,
+          rating: 4.6,
+          reviews: []
+        },
+        {
+          id: 8,
+          title: '人类简史',
+          author: '尤瓦尔·赫拉利',
+          description: '《人类简史》是以色列历史学家尤瓦尔·赫拉利创作的历史类著作，讲述了人类从石器时代至21世纪的演化与发展史。',
+          tags: ['历史', '科普', '社会学'],
+          image: 'images/sapiens.jpg',
+          publisher: '中信出版社',
+          year: 2014,
+          rating: 4.7,
+          reviews: []
+        },
+        {
+          id: 9,
+          title: '白夜行',
+          author: '东野圭吾',
+          description: '《白夜行》是日本作家东野圭吾创作的长篇小说，讲述了一对有着悲惨命运的少年少女，19年来以相当残酷、孤独、单纯的灵魂相爱却无法相守的故事。',
+          tags: ['悬疑', '推理', '日本文学'],
+          image: 'images/white-night.jpg',
+          publisher: '南海出版公司',
+          year: 1999,
+          rating: 4.8,
+          reviews: []
+        },
+        {
+          id: 10,
+          title: '沉思录',
+          author: '马可·奥勒留',
+          description: '《沉思录》是古罗马皇帝马可·奥勒留所著的哲学随笔集，是斯多葛派哲学的重要典籍。书中阐述了作者对自然、人生、社会的深刻思考。',
+          tags: ['哲学', '古典', '斯多葛', '人生思考'],
+          image: 'images/meditations.jpg',
+          publisher: '中央编译出版社',
+          year: 180,
+          rating: 4.5,
+          reviews: []
+        }
+      ];
+      
+      // 渲染书籍到首页
+      const booksGrid = document.getElementById('booksGrid');
+      booksGrid.innerHTML = '';
+      
+      books.forEach(book => {
+        const bookCard = document.createElement('div');
+        bookCard.className = 'book-card';
+        bookCard.setAttribute('data-id', book.id);
+        bookCard.innerHTML = `
+          <img src="${book.image}" alt="${book.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4='">
+          <h3>${book.title}</h3>
+          <p>${book.description.substring(0, 100)}...</p>
+          <div class="tags">
+            ${book.tags.map(tag => `<span class="tag" data-tag="${tag}">${tag}</span>`).join('')}
+          </div>
+          <button class="button view-detail-btn" data-id="${book.id}">查看详情</button>
+        `;
+        booksGrid.appendChild(bookCard);
+      });
+      
+      // 渲染热门书籍页面
+      renderPopularBooks();
+    }
+    
+    // 渲染热门书籍页面
+    function renderPopularBooks() {
+      const popularBooks = [
+        {
+          id: 1,
+          title: '三体',
+          author: '刘慈欣',
+          description: '《三体》是刘慈欣创作的系列长篇科幻小说，讲述了地球人类文明和三体文明的信息交流、生死搏杀及两个文明在宇宙中的兴衰历程。',
+          tags: ['科幻', '小说', '中国文学'],
+          image: 'images/three-body.jpg'
+        },
+        {
+          id: 2,
+          title: '活着',
+          author: '余华',
+          description: '《活着》是作家余华的代表作之一，讲述了在大时代背景下，随着内战、三反五反、大跃进、文化大革命等社会变革，徐福贵的人生和家庭不断经受着苦难，到了最后所有亲人都先后离他而去，仅剩下年老的他和一头老牛相依为命。',
+          tags: ['文学', '中国文学', '经典'],
+          image: 'images/to-live.jpg'
+        },
+        {
+          id: 3,
+          title: '百年孤独',
+          author: '加西亚·马尔克斯',
+          description: '《百年孤独》是哥伦比亚作家加西亚·马尔克斯创作的长篇小说，是魔幻现实主义的代表作，描写了布恩迪亚家族七代人的传奇故事。',
+          tags: ['文学', '魔幻现实主义', '经典'],
+          image: 'images/hundred-loneliness.jpg'
+        },
+        {
+          id: 4,
+          title: '小王子',
+          author: '安托万·德·圣-埃克苏佩里',
+          description: '《小王子》是法国作家安托万·德·圣-埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险。',
+          tags: ['童话', '经典', '法国文学'],
+          image: 'images/the-little-prince.jpg'
+        },
+        {
+          id: 5,
+          title: '红楼梦',
+          author: '曹雪芹',
+          description: '《红楼梦》是中国古典四大名著之首，清代作家曹雪芹创作的章回体长篇小说，以贾、史、王、薛四大家族的兴衰为背景，以贾宝玉、林黛玉、薛宝钗的爱情婚姻故事为主线，描绘了一批举止见识出于须眉之上的闺阁佳人的人生百态。',
+          tags: ['古典文学', '四大名著', '经典'],
+          image: 'images/reddream.jpg'
+        },
+        {
+          id: 6,
+          title: '人类简史',
+          author: '尤瓦尔·赫拉利',
+          description: '《人类简史》是以色列历史学家尤瓦尔·赫拉利创作的历史类著作，讲述了人类从石器时代至21世纪的演化与发展史。',
+          tags: ['历史', '科普', '社会学'],
+          image: 'images/sapiens.jpg'
+        }
+      ];
+      
+      const popularBooksGrid = document.getElementById('popularBooksGrid');
+      popularBooksGrid.innerHTML = '';
+      
+      popularBooks.forEach(book => {
+        const bookCard = document.createElement('div');
+        bookCard.className = 'book-card';
+        bookCard.setAttribute('data-id', book.id);
+        bookCard.innerHTML = `
+          <img src="${book.image}" alt="${book.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4='">
+          <h3>${book.title}</h3>
+          <p>${book.description.substring(0, 100)}...</p>
+          <div class="tags">
+            ${book.tags.map(tag => `<span class="tag" data-tag="${tag}">${tag}</span>`).join('')}
+          </div>
+          <button class="button view-detail-btn" data-id="${book.id}">查看详情</button>
+        `;
+        popularBooksGrid.appendChild(bookCard);
+      });
+    }
+
+    // 完善搜索功能
+    function setupSearchFunctionality() {
+      const searchButton = document.getElementById('searchButton');
+      const searchInput = document.getElementById('searchInput');
+      
       searchButton.addEventListener('click', performSearch);
       searchInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
           performSearch();
         }
       });
-      
-      // 导航链接
-      homeLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        showPage('home');
-      });
-      
-      footerHomeLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        showPage('home');
-      });
-      
-      categoriesLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        showPage('categories');
-      });
-      
-      footerCategoriesLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        showPage('categories');
-      });
-      
-      popularLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        showPage('popularTags');
-      });
-      
-      footerPopularLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        showPage('popularTags');
-      });
-      
-      uploadLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        showPage('upload');
-      });
-      
-      footerUploadLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        showPage('upload');
-      });
-      
-      showUploadForm.addEventListener('click', function() {
-        showPage('upload');
-      });
-      
-      // 返回按钮
-      backFromSearch.addEventListener('click', function() {
-        showPage('home');
-      });
-      
-      backFromCategories.addEventListener('click', function() {
-        showPage('home');
-      });
-      
-      backFromTags.addEventListener('click', function() {
-        showPage('home');
-      });
-      
-      backFromUpload.addEventListener('click', function() {
-        showPage('home');
-      });
-      
-      // 分类卡片点击事件
-      categoryCards.forEach(card => {
-        card.addEventListener('click', function() {
-          const category = this.getAttribute('data-category');
-          showCategoryBooks(category);
-        });
-      });
-      
-      // 标签点击事件
-      tagCloud.forEach(tag => {
-        tag.addEventListener('click', function() {
-          const tagName = this.getAttribute('data-tag');
-          showBooksByTag(tagName);
-        });
-      });
-      
-      // 上传表单相关事件
-      bookUploadForm.addEventListener('submit', handleBookUpload);
-      
-      fileUploadArea.addEventListener('click', function() {
-        bookCover.click();
-      });
-      
-      bookCover.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-          const file = this.files[0];
-          
-          // 验证文件类型和大小
-          if (!file.type.match('image.*')) {
-            showError('请选择图片文件');
-            return;
-          }
-          
-          if (file.size > 5 * 1024 * 1024) {
-            showError('图片大小不能超过5MB');
-            return;
-          }
-          
-          // 显示预览
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            previewImage.src = e.target.result;
-            imagePreview.style.display = 'block';
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-      
-      removeImage.addEventListener('click', function() {
-        bookCover.value = '';
-        imagePreview.style.display = 'none';
-      });
-      
-      cancelUpload.addEventListener('click', function() {
-        resetUploadForm();
-        showPage('home');
-      });
-      
-      // 标签输入
-      tagInputField.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          addTag(this.value.trim());
-          this.value = '';
-        }
-      });
-      
-      tagInputField.addEventListener('blur', function() {
-        if (this.value.trim() !== '') {
-          addTag(this.value.trim());
-          this.value = '';
-        }
-      });
     }
-
-    // 登出
-    function logout() {
-      currentUser = null;
-      localStorage.removeItem('currentUser');
-      updateUserInterface();
-      coverPage.style.display = 'flex';
-      mainApp.style.display = 'none';
-    }
-
-    // 更新用户界面
-    function updateUserInterface() {
-      if (currentUser) {
-        loginButton.textContent = '退出登录';
-        userInfo.style.display = 'flex';
-        userAvatar.textContent = currentUser.charAt(0).toUpperCase();
-        userName.textContent = currentUser;
-      } else {
-        loginButton.textContent = '登录/注册';
-        userInfo.style.display = 'none';
-      }
-    }
-
+    
     // 执行搜索
     function performSearch() {
-      const query = searchInput.value.trim().toLowerCase();
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
       
       if (query === '') {
         alert('请输入搜索关键词');
@@ -1952,18 +2124,24 @@
       }
       
       // 搜索书籍
+      const books = getAllBooks();
       const results = books.filter(book => 
         book.title.toLowerCase().includes(query) ||
         book.author.toLowerCase().includes(query) ||
-        book.tags.some(tag => tag.toLowerCase().includes(query))
+        book.tags.some(tag => tag.toLowerCase().includes(query)) ||
+        book.description.toLowerCase().includes(query)
       );
       
       // 显示搜索结果
       displaySearchResults(results, query);
     }
-
+    
     // 显示搜索结果
     function displaySearchResults(results, query) {
+      const searchResultsGrid = document.getElementById('searchResultsGrid');
+      const resultsCount = document.getElementById('resultsCount');
+      const noResults = document.getElementById('noResults');
+      
       // 更新结果计数
       resultsCount.textContent = `找到 ${results.length} 个结果 (关键词: "${query}")`;
       
@@ -1984,264 +2162,567 @@
       }
       
       // 显示搜索结果页面
-      showPage('search');
+      showPage('search-results-page');
     }
-
-    // 显示分类书籍
-    function showCategoryBooks(category) {
-      const categoryBooks = books.filter(book => book.category === category);
-      displaySearchResults(categoryBooks, `分类: ${getCategoryName(category)}`);
-    }
-
-    // 根据标签显示书籍
-    function showBooksByTag(tagName) {
-      const taggedBooks = books.filter(book => book.tags.includes(tagName));
-      
-      // 更新结果标题
-      tagResultsTitle.textContent = `标签: ${tagName}`;
-      tagResultsCount.textContent = `找到 ${taggedBooks.length} 个结果`;
-      
-      // 清空结果网格
-      tagResultsGrid.innerHTML = '';
-      
-      // 显示或隐藏无结果消息
-      if (taggedBooks.length === 0) {
-        tagNoResults.style.display = 'block';
-      } else {
-        tagNoResults.style.display = 'none';
-        
-        // 添加结果到网格
-        taggedBooks.forEach(book => {
-          const bookCard = createBookCard(book);
-          tagResultsGrid.appendChild(bookCard);
-        });
-      }
-      
-      // 显示搜索结果
-      tagResults.style.display = 'block';
-    }
-
-    // 获取分类名称
-    function getCategoryName(category) {
-      const categoryNames = {
-        'fiction': '文学小说',
-        'scifi': '科幻奇幻',
-        'mystery': '悬疑推理',
-        'history': '历史传记',
-        'science': '科普读物',
-        'philosophy': '哲学心理'
-      };
-      return categoryNames[category] || category;
-    }
-
-    // 显示页面
-    function showPage(page) {
-      // 隐藏所有页面
-      homePage.style.display = 'none';
-      searchResults.style.display = 'none';
-      categoriesPage.style.display = 'none';
-      popularTagsPage.style.display = 'none';
-      uploadPage.style.display = 'none';
-      tagResults.style.display = 'none';
-      
-      // 显示指定页面
-      switch(page) {
-        case 'home':
-          homePage.style.display = 'block';
-          currentPage = 'home';
-          break;
-        case 'search':
-          searchResults.style.display = 'block';
-          currentPage = 'search';
-          break;
-        case 'categories':
-          categoriesPage.style.display = 'block';
-          currentPage = 'categories';
-          break;
-        case 'popularTags':
-          popularTagsPage.style.display = 'block';
-          currentPage = 'popularTags';
-          break;
-        case 'upload':
-          uploadPage.style.display = 'block';
-          currentPage = 'upload';
-          break;
-      }
-    }
-
-    // 添加标签
-    function addTag(tagText) {
-      if (tagText === '') return;
-      
-      if (selectedTags.length >= 10) {
-        showError('最多只能添加10个标签');
-        return;
-      }
-      
-      if (selectedTags.includes(tagText)) {
-        showError('该标签已存在');
-        return;
-      }
-      
-      selectedTags.push(tagText);
-      renderTags();
-    }
-
-    // 移除标签
-    function removeTag(tagText) {
-      selectedTags = selectedTags.filter(tag => tag !== tagText);
-      renderTags();
-    }
-
-    // 渲染标签
-    function renderTags() {
-      // 清除现有标签
-      const existingTags = tagInput.querySelectorAll('.tag-item');
-      existingTags.forEach(tag => tag.remove());
-      
-      // 添加新标签
-      selectedTags.forEach(tag => {
-        const tagElement = document.createElement('div');
-        tagElement.className = 'tag-item';
-        tagElement.innerHTML = `
-          ${tag}
-          <button type="button" class="tag-remove" data-tag="${tag}">&times;</button>
-        `;
-        tagInput.insertBefore(tagElement, tagInputField);
-      });
-      
-      // 添加移除标签的事件监听
-      tagInput.querySelectorAll('.tag-remove').forEach(button => {
-        button.addEventListener('click', function() {
-          removeTag(this.getAttribute('data-tag'));
-        });
-      });
-    }
-
-    // 处理图书上传
-    function handleBookUpload(e) {
-      e.preventDefault();
-      
-      // 隐藏之前的消息
-      hideMessages();
-      
-      // 验证表单
-      if (!validateForm()) {
-        return;
-      }
-      
-      // 显示上传进度
-      uploadProgress.style.display = 'block';
-      
-      // 模拟上传过程
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += Math.random() * 10;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(interval);
-          
-          // 上传完成
-          setTimeout(() => {
-            completeUpload();
-          }, 500);
+    
+    // 获取所有书籍数据（包含完整信息）
+    function getAllBooks() {
+      return [
+        {
+          id: 1,
+          title: '三体',
+          author: '刘慈欣',
+          description: '《三体》是刘慈欣创作的系列长篇科幻小说，讲述了地球人类文明和三体文明的信息交流、生死搏杀及两个文明在宇宙中的兴衰历程。小说以气势宏大的叙事和深刻的哲学思考著称，是中国科幻文学的里程碑之作。其第一部经过刘宇昆翻译后获得了第73届雨果奖最佳长篇小说奖。',
+          tags: ['科幻', '小说', '中国文学', '雨果奖', '刘慈欣'],
+          image: 'images/three-body.jpg',
+          publisher: '重庆出版社',
+          year: 2008,
+          rating: 4.8,
+          reviews: [
+            { 
+              user: '科幻迷', 
+              rating: 5, 
+              comment: '这本书彻底改变了我对科幻小说的认知！宏大的宇宙观和深刻的人文思考完美结合，让人读后久久不能平静。', 
+              date: '2023-01-15' 
+            },
+            { 
+              user: '书虫小王', 
+              rating: 4, 
+              comment: '想象力非常丰富，黑暗森林理论令人震撼。不过有些科学概念对普通读者来说可能比较难懂。', 
+              date: '2023-02-20' 
+            },
+            { 
+              user: '星空探索者', 
+              rating: 5, 
+              comment: '中国科幻的巅峰之作！不仅故事精彩，更引发了对人类文明和宇宙道德的深刻思考。', 
+              date: '2023-03-10' 
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: '活着',
+          author: '余华',
+          description: '《活着》是作家余华的代表作之一，讲述了在大时代背景下，随着内战、三反五反、大跃进、文化大革命等社会变革，徐福贵的人生和家庭不断经受着苦难，到了最后所有亲人都先后离他而去，仅剩下年老的他和一头老牛相依为命。小说以朴实的语言展现了生命的坚韧与尊严。',
+          tags: ['文学', '中国文学', '经典', '人生', '余华'],
+          image: 'images/to-live.jpg',
+          publisher: '作家出版社',
+          year: 1993,
+          rating: 4.7,
+          reviews: [
+            { 
+              user: '文学爱好者', 
+              rating: 5, 
+              comment: '感人至深，让人思考生命的意义。读完后久久不能平静，福贵的一生让人唏嘘不已。', 
+              date: '2023-03-10' 
+            },
+            { 
+              user: '沉思者', 
+              rating: 4, 
+              comment: '虽然故事很悲惨，但从中能感受到生命的顽强。余华的文字朴实却有力量。', 
+              date: '2023-04-15' 
+            }
+          ]
+        },
+        {
+          id: 3,
+          title: '百年孤独',
+          author: '加西亚·马尔克斯',
+          description: '《百年孤独》是哥伦比亚作家加西亚·马尔克斯创作的长篇小说，是魔幻现实主义的代表作，描写了布恩迪亚家族七代人的传奇故事。小说融入神话传说、民间故事、宗教典故等神秘因素，巧妙地糅合了现实与虚幻，展现出一个瑰丽的想象世界。',
+          tags: ['文学', '魔幻现实主义', '经典', '诺贝尔文学奖', '拉美文学'],
+          image: 'images/hundred-loneliness.jpg',
+          publisher: '南海出版公司',
+          year: 1967,
+          rating: 4.9,
+          reviews: [
+            { 
+              user: '文学评论家', 
+              rating: 5, 
+              comment: '魔幻现实主义的巅峰之作！马尔克斯用他神奇的笔触创造了一个既真实又梦幻的世界。', 
+              date: '2023-04-05' 
+            },
+            { 
+              user: '书海漫游', 
+              rating: 5, 
+              comment: '读了三遍，每次都有新的感悟。布恩迪亚家族的命运就像一场华丽的梦境。', 
+              date: '2023-05-20' 
+            }
+          ]
+        },
+        {
+          id: 4,
+          title: '小王子',
+          author: '安托万·德·圣-埃克苏佩里',
+          description: '《小王子》是法国作家安托万·德·圣-埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险。作者以小王子的孩子式的眼光，透视出成人的空虚、盲目和愚妄，用浅显天真的语言写出了人类的孤独寂寞、没有根基随风流浪的命运。',
+          tags: ['童话', '经典', '法国文学', '哲理', '儿童文学'],
+          image: 'images/the-little-prince.jpg',
+          publisher: '人民文学出版社',
+          year: 1943,
+          rating: 4.8,
+          reviews: [
+            { 
+              user: '心灵读者', 
+              rating: 5, 
+              comment: '一本写给大人的童话书。每次读都有新的感悟，关于爱、责任和成长。', 
+              date: '2023-06-01' 
+            }
+          ]
+        },
+        {
+          id: 5,
+          title: '1984',
+          author: '乔治·奥威尔',
+          description: '《1984》是英国作家乔治·奥威尔创作的一部反乌托邦小说，刻画了一个令人感到窒息的恐怖世界，在假想的未来社会中，独裁者以追逐权力为最终目标，人性被强权彻底扼杀，自由被彻底剥夺，思想受到严酷钳制，人民的生活陷入了极度贫困，下层人民的人生变成了单调乏味的循环。这部小说与英国作家赫胥黎的《美丽新世界》、俄国作家扎米亚金的《我们》并称反乌托邦的三部代表作。',
+          tags: ['反乌托邦', '政治小说', '经典', '乔治·奥威尔', '英国文学'],
+          image: 'images/1984.jpg',
+          publisher: '辽宁人民出版社',
+          year: 1949,
+          rating: 4.7,
+          reviews: []
+        },
+        {
+          id: 6,
+          title: '红楼梦',
+          author: '曹雪芹',
+          description: '《红楼梦》是中国古典四大名著之首，清代作家曹雪芹创作的章回体长篇小说，又名《石头记》。小说以贾、史、王、薛四大家族的兴衰为背景，以贾宝玉、林黛玉、薛宝钗的爱情婚姻故事为主线，描绘了一批举止见识出于须眉之上的闺阁佳人的人生百态，展现了真正的人性美和悲剧美，可以说是一部从各个角度展现女性美以及中国古代社会世态百相的史诗性著作。',
+          tags: ['古典文学', '四大名著', '经典', '曹雪芹', '中国古典'],
+          image: 'images/reddream.jpg',
+          publisher: '人民文学出版社',
+          year: 1791,
+          rating: 4.9,
+          reviews: [
+            { 
+              user: '红学爱好者', 
+              rating: 5, 
+              comment: '中国古典小说的巅峰！每次重读都能发现新的细节，人物塑造栩栩如生。', 
+              date: '2023-07-10' 
+            }
+          ]
+        },
+        {
+          id: 7,
+          title: '追风筝的人',
+          author: '卡勒德·胡赛尼',
+          description: '《追风筝的人》是美籍阿富汗作家卡勒德·胡赛尼的第一部长篇小说，讲述了一个关于友谊、背叛和救赎的故事。小说以阿富汗的历史变迁为背景，情感真挚动人。全书围绕风筝与阿富汗的两个少年之间展开，一个富家少年与家中仆人关于风筝的故事，关于人性的背叛与救赎。',
+          tags: ['文学', '友谊', '救赎', '外国文学', '卡勒德·胡赛尼'],
+          image: 'images/kite-runner.jpg',
+          publisher: '上海人民出版社',
+          year: 2003,
+          rating: 4.6,
+          reviews: []
+        },
+        {
+          id: 8,
+          title: '人类简史',
+          author: '尤瓦尔·赫拉利',
+          description: '《人类简史：从动物到上帝》是以色列历史学家尤瓦尔·赫拉利创作的历史类著作，讲述了从十万年前有生命迹象开始到21世纪资本、科技交织的人类发展史。该书将人类历史分为四个阶段：认知革命、农业革命、人类的融合统一与科学革命，理清影响人类发展的重大脉络。',
+          tags: ['历史', '科普', '人类学', '社会学', '尤瓦尔·赫拉利'],
+          image: 'images/sapiens.jpg',
+          publisher: '中信出版社',
+          year: 2014,
+          rating: 4.7,
+          reviews: []
+        },
+        {
+          id: 9,
+          title: '白夜行',
+          author: '东野圭吾',
+          description: '《白夜行》是日本作家东野圭吾创作的长篇小说，讲述了一对有着悲惨命运的少年少女，19年来以相当残酷、孤独、单纯的灵魂相爱却无法相守的故事。小说将无望却坚守的凄凉爱情和执著而缜密的冷静推理完美结合，被众多东饭视作东野圭吾作品中的无冕之王。',
+          tags: ['悬疑', '推理', '日本文学', '东野圭吾', '小说'],
+          image: 'images/white-night.jpg',
+          publisher: '南海出版公司',
+          year: 1999,
+          rating: 4.8,
+          reviews: []
+        },
+        {
+          id: 10,
+          title: '沉思录',
+          author: '马可·奥勒留',
+          description: '《沉思录》是古罗马皇帝马可·奥勒留所著的哲学随笔集，是斯多葛派哲学的重要典籍。书中阐述了作者对自然、人生、社会的深刻思考。马可·奥勒留在书中阐述了灵魂与死亡的关系，解析了个人的德行、个人的解脱以及个人对社会的责任，要求常常自省以达到内心的平静，要摒弃一切无用和琐屑的思想、正直地思考。',
+          tags: ['哲学', '古典', '斯多葛', '人生思考', '马可·奥勒留'],
+          image: 'images/meditations.jpg',
+          publisher: '中央编译出版社',
+          year: 180,
+          rating: 4.5,
+          reviews: []
         }
+      ];
+    }
+    
+    // 创建书籍卡片
+    function createBookCard(book) {
+      const bookCard = document.createElement('div');
+      bookCard.className = 'book-card';
+      bookCard.setAttribute('data-id', book.id);
+      bookCard.innerHTML = `
+        <img src="${book.image}" alt="${book.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4='">
+        <h3>${book.title}</h3>
+        <p>${book.description.substring(0, 100)}...</p>
+        <div class="tags">
+          ${book.tags.map(tag => `<span class="tag" data-tag="${tag}">${tag}</span>`).join('')}
+        </div>
+        <button class="button view-detail-btn" data-id="${book.id}">查看详情</button>
+      `;
+      return bookCard;
+    }
+    
+    // 显示图书详情
+    function showBookDetail(bookId) {
+      const books = getAllBooks();
+      const book = books.find(b => b.id === bookId);
+      
+      if (!book) {
+        alert('未找到该图书信息');
+        return;
+      }
+      
+      const bookDetailContainer = document.getElementById('bookDetailContainer');
+      bookDetailContainer.innerHTML = createBookDetailHTML(book);
+      
+      // 设置评分星星的交互
+      setupRatingStars();
+      
+      // 设置评论表单提交
+      setupReviewForm(bookId);
+      
+      // 设置返回按钮
+      document.getElementById('backFromDetail').addEventListener('click', function() {
+        // 返回到之前的页面
+        const previousPage = localStorage.getItem('previousPage') || 'home-page';
+        showPage(previousPage);
+      });
+      
+      // 显示详情页面
+      showPage('book-detail-page');
+    }
+    
+    // 创建图书详情HTML
+    function createBookDetailHTML(book) {
+      const averageRating = book.reviews.length > 0 
+        ? (book.reviews.reduce((sum, review) => sum + review.rating, 0) / book.reviews.length).toFixed(1)
+        : '暂无评分';
+      
+      return `
+        <div class="book-detail-header">
+          <div class="book-cover-large">
+            <img src="${book.image}" alt="${book.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4='">
+          </div>
+          <div class="book-info">
+            <h1 class="book-title-large">${book.title}</h1>
+            <p class="book-author-large">${book.author}</p>
+            <div class="book-meta">
+              <div class="book-meta-item">
+                <i class="fas fa-star"></i>
+                <span>评分: ${averageRating}/5.0</span>
+              </div>
+              <div class="book-meta-item">
+                <i class="fas fa-building"></i>
+                <span>${book.publisher}</span>
+              </div>
+              <div class="book-meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>${book.year}年</span>
+              </div>
+              <div class="book-meta-item">
+                <i class="fas fa-comment"></i>
+                <span>${book.reviews.length} 条评论</span>
+              </div>
+            </div>
+            <div class="tags">
+              ${book.tags.map(tag => `<span class="tag" data-tag="${tag}">${tag}</span>`).join('')}
+            </div>
+            <div class="book-description">
+              <p>${book.description}</p>
+            </div>
+            <div class="book-actions">
+              <button class="action-button primary" id="addToBookshelf">
+                <i class="fas fa-plus"></i>添加到书架
+              </button>
+              <button class="action-button" id="shareBook">
+                <i class="fas fa-share-alt"></i>分享图书
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="book-reviews">
+          <div class="rating-section">
+            <div class="rating-overview">
+              <div class="average-rating">
+                <div class="rating-score">${averageRating}</div>
+                <div class="rating-stars">
+                  ${generateStars(averageRating)}
+                </div>
+                <div>${book.reviews.length} 条评论</div>
+              </div>
+              <div class="user-rating">
+                <h4>我的评价</h4>
+                <div class="rating-input">
+                  <label>评分:</label>
+                  <div class="rating-stars" id="userRatingStars">
+                    ${generateEditableStars(0)}
+                  </div>
+                  <span id="userRatingText">点击星星评分</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="reviews-list">
+            <h3>读者评论 (${book.reviews.length})</h3>
+            ${book.reviews.length > 0 ? 
+              book.reviews.map(review => `
+                <div class="review-item">
+                  <div class="review-header">
+                    <span class="review-author">${review.user}</span>
+                    <div>
+                      <span class="review-rating">${generateStars(review.rating)}</span>
+                      <span class="review-date">${review.date}</span>
+                    </div>
+                  </div>
+                  <div class="review-content">
+                    <p>${review.comment}</p>
+                  </div>
+                </div>
+              `).join('') : 
+              '<div class="no-results" style="display: block; grid-column: 1 / -1;">' +
+                '<i class="fas fa-comment-slash"></i>' +
+                '<p>暂无评论，快来发表第一条评论吧！</p>' +
+              '</div>'
+            }
+          </div>
+          
+          <div class="review-form">
+            <h4>发表我的评论</h4>
+            <form id="reviewForm">
+              <div class="form-group">
+                <div class="rating-input">
+                  <label>我的评分:</label>
+                  <div class="rating-stars" id="reviewRatingStars">
+                    ${generateEditableStars(0)}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" id="reviewComment" placeholder="分享您对这本书的看法...（不少于20字）" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="submit-review">
+                <i class="fas fa-paper-plane"></i>提交评论
+              </button>
+            </form>
+          </div>
+        </div>
+      `;
+    }
+    
+    // 生成星星HTML
+    function generateStars(rating) {
+      if (rating === '暂无评分') {
+        return '<span style="color: #6c757d; font-size: 14px;">暂无评分</span>';
+      }
+      
+      const numRating = parseFloat(rating);
+      const fullStars = Math.floor(numRating);
+      const halfStar = numRating % 1 >= 0.5;
+      let starsHTML = '';
+      
+      for (let i = 1; i <= 5; i++) {
+        if (i <= fullStars) {
+          starsHTML += '<i class="fas fa-star star active"></i>';
+        } else if (i === fullStars + 1 && halfStar) {
+          starsHTML += '<i class="fas fa-star-half-alt star active"></i>';
+        } else {
+          starsHTML += '<i class="far fa-star star"></i>';
+        }
+      }
+      
+      return starsHTML;
+    }
+    
+    // 生成可编辑的星星
+    function generateEditableStars(rating) {
+      let starsHTML = '';
+      for (let i = 1; i <= 5; i++) {
+        const isActive = i <= rating;
+        starsHTML += `<i class="${isActive ? 'fas' : 'far'} fa-star star" data-rating="${i}"></i>`;
+      }
+      return starsHTML;
+    }
+    
+    // 设置评分星星交互
+    function setupRatingStars() {
+      const starContainers = document.querySelectorAll('#userRatingStars, #reviewRatingStars');
+      
+      starContainers.forEach(container => {
+        const stars = container.querySelectorAll('.star[data-rating]');
+        let currentRating = 0;
         
-        progressFill.style.width = `${progress}%`;
-        progressText.textContent = `${Math.round(progress)}%`;
-      }, 200);
+        stars.forEach(star => {
+          star.addEventListener('mouseover', function() {
+            const rating = parseInt(this.getAttribute('data-rating'));
+            highlightStars(stars, rating);
+          });
+          
+          star.addEventListener('click', function() {
+            currentRating = parseInt(this.getAttribute('data-rating'));
+            highlightStars(stars, currentRating);
+            if (container.id === 'userRatingStars') {
+              updateRatingText(currentRating);
+            }
+          });
+        });
+        
+        container.addEventListener('mouseleave', function() {
+          highlightStars(stars, currentRating);
+        });
+      });
     }
-
-    // 验证表单
-    function validateForm() {
-      const title = document.getElementById('bookTitle').value.trim();
-      const author = document.getElementById('bookAuthor').value.trim();
-      const description = document.getElementById('bookDescription').value.trim();
-      
-      if (title === '') {
-        showError('请输入书名');
-        return false;
+    
+    // 高亮星星
+    function highlightStars(stars, rating) {
+      stars.forEach(star => {
+        const starRating = parseInt(star.getAttribute('data-rating'));
+        if (starRating <= rating) {
+          star.classList.add('active');
+          star.classList.remove('far');
+          star.classList.add('fas');
+        } else {
+          star.classList.remove('active');
+          star.classList.remove('fas');
+          star.classList.add('far');
+        }
+      });
+    }
+    
+    // 更新评分文本
+    function updateRatingText(rating) {
+      const ratingText = document.getElementById('userRatingText');
+      if (ratingText) {
+        const ratingTexts = ['点击星星评分', '很差', '较差', '一般', '推荐', '力荐'];
+        ratingText.textContent = ratingTexts[rating] || `已评分: ${rating} 星`;
+        ratingText.style.color = rating > 0 ? '#2c3e50' : '#6c757d';
+        ratingText.style.fontWeight = rating > 0 ? '600' : 'normal';
+      }
+    }
+    
+    // 设置评论表单
+    function setupReviewForm(bookId) {
+      const reviewForm = document.getElementById('reviewForm');
+      if (reviewForm) {
+        reviewForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const rating = getSelectedRating();
+          const comment = document.getElementById('reviewComment').value.trim();
+          
+          if (rating === 0) {
+            alert('请选择评分');
+            return;
+          }
+          
+          if (comment.length < 20) {
+            alert('评论内容至少需要20个字');
+            return;
+          }
+          
+          // 模拟提交评论
+          const newReview = {
+            user: '当前用户',
+            rating: rating,
+            comment: comment,
+            date: new Date().toISOString().split('T')[0]
+          };
+          
+          // 在实际应用中，这里应该发送到服务器
+          alert('评论提交成功！感谢您的分享。');
+          reviewForm.reset();
+          resetStars();
+          
+          // 模拟刷新评论列表
+          setTimeout(() => {
+            showBookDetail(bookId);
+          }, 1000);
+        });
+      }
+    }
+    
+    // 获取选中的评分
+    function getSelectedRating() {
+      const activeStars = document.querySelectorAll('#reviewRatingStars .star.active');
+      return activeStars.length;
+    }
+    
+    // 重置星星
+    function resetStars() {
+      const stars = document.querySelectorAll('#reviewRatingStars .star[data-rating]');
+      stars.forEach(star => {
+        star.classList.remove('active');
+        star.classList.remove('fas');
+        star.classList.add('far');
+      });
+    }
+    
+    // 显示页面
+    function showPage(pageId) {
+      // 保存当前页面状态
+      const currentPage = document.querySelector('.page.active');
+      if (currentPage && currentPage.id !== pageId) {
+        localStorage.setItem('previousPage', currentPage.id);
       }
       
-      if (author === '') {
-        showError('请输入作者');
-        return false;
-      }
+      // 隐藏所有页面
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
       
-      if (description === '') {
-        showError('请输入内容简介');
-        return false;
-      }
+      // 显示目标页面
+      document.getElementById(pageId).classList.add('active');
       
-      if (description.length < 20) {
-        showError('内容简介至少需要20个字符');
-        return false;
-      }
-      
-      return true;
+      // 滚动到顶部
+      window.scrollTo(0, 0);
     }
-
-    // 完成上传
-    function completeUpload() {
-      const title = document.getElementById('bookTitle').value;
-      const author = document.getElementById('bookAuthor').value;
-      const publisher = document.getElementById('bookPublisher').value;
-      const year = document.getElementById('bookYear').value;
-      const description = document.getElementById('bookDescription').value;
+    
+    // 初始化标签页面
+    function initializeTags() {
+      const tags = [
+        { name: '科幻', count: 3, icon: 'fas fa-rocket' },
+        { name: '文学', count: 6, icon: 'fas fa-book' },
+        { name: '悬疑', count: 1, icon: 'fas fa-search' },
+        { name: '历史', count: 1, icon: 'fas fa-landmark' },
+        { name: '心理学', count: 0, icon: 'fas fa-brain' },
+        { name: '哲学', count: 1, icon: 'fas fa-atom' },
+        { name: '传记', count: 0, icon: 'fas fa-user' },
+        { name: '经典', count: 6, icon: 'fas fa-crown' },
+        { name: '当代文学', count: 1, icon: 'fas fa-pen-fancy' },
+        { name: '推理', count: 1, icon: 'fas fa-puzzle-piece' },
+        { name: '中国文学', count: 3, icon: 'fas fa-feather' },
+        { name: '外国文学', count: 2, icon: 'fas fa-globe' }
+      ];
       
-      // 创建新图书对象
-      const newBook = {
-        id: books.length + 1,
-        title: title,
-        author: author,
-        description: description,
-        tags: [...selectedTags],
-        cover: previewImage.src || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjI4MCIgdmlld0JveD0iMCAwIDI4MCAyODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIyODAiIGZpbGw9IiNlOGY0ZjgiLz48dGV4dCB4PSIxNDAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjNGE3YjlkIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4kTm9JbWFnZTwvdGV4dD48L3N2Zz4=',
-        publisher: publisher,
-        year: year,
-        rating: 4.5,
-        isPopular: false,
-        category: "fiction"
-      };
+      const tagsContainer = document.getElementById('tagsContainer');
+      tagsContainer.innerHTML = '';
       
-      // 添加到书籍列表
-      books.push(newBook);
-      
-      // 重新渲染书籍列表
-      renderBooks();
-      
-      // 显示成功消息
-      successMessage.style.display = 'block';
-      uploadProgress.style.display = 'none';
-      
-      // 重置表单
-      setTimeout(() => {
-        resetUploadForm();
-        showPage('home');
-        successMessage.style.display = 'none';
-      }, 2000);
-    }
-
-    // 重置上传表单
-    function resetUploadForm() {
-      bookUploadForm.reset();
-      selectedTags = [];
-      renderTags();
-      imagePreview.style.display = 'none';
-      hideMessages();
-    }
-
-    // 显示错误消息
-    function showError(message) {
-      errorText.textContent = message;
-      errorMessage.style.display = 'block';
-    }
-
-    // 隐藏所有消息
-    function hideMessages() {
-      errorMessage.style.display = 'none';
-      successMessage.style.display = 'none';
-      uploadProgress.style.display = 'none';
+      tags.forEach(tag => {
+        const tagCard = document.createElement('div');
+        tagCard.className = 'tag-card';
+        tagCard.setAttribute('data-tag', tag.name);
+        tagCard.innerHTML = `
+          <div class="tag-icon">
+            <i class="${tag.icon}"></i>
+          </div>
+          <h3>${tag.name}</h3>
+          <p class="tag-count">${tag.count} 本书</p>
+        `;
+        
+        // 添加点击事件
+        tagCard.addEventListener('click', function() {
+          const tagName = this.getAttribute('data-tag');
+          document.getElementById('searchInput').value = tagName;
+          performSearch();
+        });
+        
+        tagsContainer.appendChild(tagCard);
+      });
     }
   </script>
 </body>
