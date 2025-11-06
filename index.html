@@ -1069,6 +1069,198 @@
       transform: translateY(0);
     }
 
+    /* 个人主页样式 */
+    .profile-container {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+
+    .profile-header {
+      display: flex;
+      gap: 30px;
+      padding: 40px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-bottom: 1px solid #e9ecef;
+      align-items: center;
+    }
+
+    .user-avatar-large {
+      flex: 0 0 120px;
+    }
+
+    .user-avatar-large .user-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: #e67e22;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 36px;
+      box-shadow: 0 8px 25px rgba(230, 126, 34, 0.3);
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .user-info h2 {
+      font-size: 32px;
+      color: #2c3e50;
+      margin-bottom: 8px;
+    }
+
+    .user-info p {
+      font-size: 18px;
+      color: #6c757d;
+      margin-bottom: 25px;
+    }
+
+    .user-stats {
+      display: flex;
+      gap: 40px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 28px;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #6c757d;
+    }
+
+    .profile-tabs {
+      display: flex;
+      border-bottom: 1px solid #e9ecef;
+      background-color: white;
+    }
+
+    .tab-button {
+      flex: 1;
+      padding: 18px 20px;
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      color: #6c757d;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .tab-button:hover {
+      color: #2c3e50;
+      background-color: #f8f9fa;
+    }
+
+    .tab-button.active {
+      color: #2c3e50;
+    }
+
+    .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: #e67e22;
+    }
+
+    .tab-content {
+      padding: 30px;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    /* 用户评论列表样式 */
+    .user-review-item {
+      border-bottom: 1px solid #e9ecef;
+      padding: 25px 0;
+      transition: background-color 0.3s ease;
+    }
+
+    .user-review-item:hover {
+      background-color: #f8f9fa;
+      margin: 0 -20px;
+      padding: 25px 20px;
+      border-radius: 8px;
+    }
+
+    .user-review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .user-review-book {
+      flex: 1;
+    }
+
+    .user-review-book-title {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 18px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .user-review-book-title:hover {
+      color: #e67e22;
+    }
+
+    .user-review-book-author {
+      color: #6c757d;
+      font-size: 14px;
+    }
+
+    .user-review-meta {
+      text-align: right;
+    }
+
+    .user-review-rating {
+      color: #e67e22;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .user-review-date {
+      color: #6c757d;
+      font-size: 14px;
+    }
+
+    .user-review-content {
+      line-height: 1.7;
+      color: #495057;
+      font-size: 15px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #e67e22;
+    }
+
     .footer {
       background-color: #2c3e50;
       color: white;
@@ -1371,6 +1563,40 @@
       .review-form {
         padding: 20px;
       }
+      
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+        gap: 20px;
+      }
+      
+      .user-avatar-large {
+        flex: 0 0 auto;
+      }
+      
+      .user-stats {
+        gap: 20px;
+        justify-content: center;
+      }
+      
+      .profile-tabs {
+        flex-direction: column;
+      }
+      
+      .tab-button {
+        padding: 15px;
+      }
+      
+      .user-review-header {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .user-review-meta {
+        text-align: left;
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -1415,6 +1641,9 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link" data-page="upload-page">上传图书</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" data-page="profile-page">个人主页</a>
             </li>
           </ul>
 
@@ -1623,6 +1852,83 @@
           </form>
         </div>
       </div>
+
+      <!-- 个人主页 -->
+      <div id="profile-page" class="page">
+        <div class="page-header">
+          <button class="back-button" data-page="home-page">
+            <i class="fas fa-arrow-left"></i> 返回首页
+          </button>
+          <h2 class="section-title">个人主页</h2>
+        </div>
+        
+        <div class="profile-container">
+          <div class="profile-header">
+            <div class="user-avatar-large">
+              <div class="user-avatar" id="profileUserAvatar">U</div>
+            </div>
+            <div class="user-info">
+              <h2 id="profileUserName">用户名</h2>
+              <p id="profileUserEmail">user@example.com</p>
+              <div class="user-stats">
+                <div class="stat-item">
+                  <span class="stat-number" id="bookshelfCount">0</span>
+                  <span class="stat-label">我的书架</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number" id="uploadedCount">0</span>
+                  <span class="stat-label">上传图书</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number" id="reviewsCount">0</span>
+                  <span class="stat-label">我的评论</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-tabs">
+            <button class="tab-button active" data-tab="bookshelf">我的书架</button>
+            <button class="tab-button" data-tab="uploaded">我上传的</button>
+            <button class="tab-button" data-tab="reviews">我的评论</button>
+          </div>
+          
+          <div class="tab-content">
+            <div id="bookshelf-tab" class="tab-pane active">
+              <div class="grid-container" id="bookshelfGrid">
+                <!-- 书架图书将通过JavaScript动态生成 -->
+              </div>
+              <div class="no-results" id="noBookshelfResults" style="display: block;">
+                <i class="fas fa-book-open"></i>
+                <p>您还没有添加任何图书到书架</p>
+                <button class="button" data-page="home-page" style="margin-top: 15px;">去发现好书</button>
+              </div>
+            </div>
+            
+            <div id="uploaded-tab" class="tab-pane">
+              <div class="grid-container" id="uploadedGrid">
+                <!-- 上传的图书将通过JavaScript动态生成 -->
+              </div>
+              <div class="no-results" id="noUploadedResults" style="display: block;">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>您还没有上传过图书</p>
+                <button class="button" data-page="upload-page" style="margin-top: 15px;">立即上传</button>
+              </div>
+            </div>
+            
+            <div id="reviews-tab" class="tab-pane">
+              <div class="reviews-list" id="userReviewsList">
+                <!-- 用户评论将通过JavaScript动态生成 -->
+              </div>
+              <div class="no-results" id="noReviewsResults" style="display: block;">
+                <i class="fas fa-comment"></i>
+                <p>您还没有发表过评论</p>
+                <button class="button" data-page="home-page" style="margin-top: 15px;">去发现好书</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <footer class="footer">
@@ -1638,6 +1944,7 @@
             <li><a href="#" data-page="popular-page">热门书籍</a></li>
             <li><a href="#" data-page="tags-page">热门标签</a></li>
             <li><a href="#" data-page="upload-page">上传图书</a></li>
+            <li><a href="#" data-page="profile-page">个人主页</a></li>
           </ul>
         </div>
         <div class="footer-section">
@@ -1741,6 +2048,8 @@
         initializeBooks();
         // 初始化搜索功能
         setupSearchFunctionality();
+        // 初始化个人主页
+        initializeProfilePage();
       });
       
       // 切换登录/注册模式
@@ -1803,6 +2112,8 @@
         initializeBooks();
         // 初始化搜索功能
         setupSearchFunctionality();
+        // 初始化个人主页
+        initializeProfilePage();
       });
       
       // 退出登录
@@ -1832,6 +2143,10 @@
             // 如果切换到热门书籍页面，重新渲染
             if (targetPage === 'popular-page') {
               renderPopularBooks();
+            }
+            // 如果切换到个人主页，更新数据
+            else if (targetPage === 'profile-page') {
+              loadUserData();
             }
           }
         });
@@ -1872,6 +2187,252 @@
       });
     });
     
+    // 初始化个人主页
+    function initializeProfilePage() {
+      // 设置用户信息
+      updateProfileInfo();
+      
+      // 加载用户数据
+      loadUserData();
+      
+      // 设置个人主页标签页切换
+      setupProfileTabs();
+    }
+    
+    // 更新个人主页用户信息
+    function updateProfileInfo() {
+      const userName = document.getElementById('userName').textContent;
+      const userAvatar = document.getElementById('userAvatar').textContent;
+      
+      document.getElementById('profileUserName').textContent = userName;
+      document.getElementById('profileUserAvatar').textContent = userAvatar;
+    }
+    
+    // 设置个人主页标签页切换
+    function setupProfileTabs() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabPanes = document.querySelectorAll('.tab-pane');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          
+          // 更新活跃标签按钮
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // 更新活跃标签页
+          tabPanes.forEach(pane => pane.classList.remove('active'));
+          document.getElementById(`${tabId}-tab`).classList.add('active');
+          
+          // 加载对应标签页数据
+          loadTabData(tabId);
+        });
+      });
+    }
+    
+    // 加载用户数据
+    function loadUserData() {
+      // 从localStorage获取用户数据，如果没有则使用默认数据
+      const userData = JSON.parse(localStorage.getItem('userData')) || {
+        bookshelf: [],
+        uploaded: [],
+        reviews: []
+      };
+      
+      // 更新统计数据
+      updateStats(userData);
+      
+      // 加载默认标签页数据
+      loadTabData('bookshelf');
+    }
+    
+    // 更新统计数据
+    function updateStats(userData) {
+      document.getElementById('bookshelfCount').textContent = userData.bookshelf.length;
+      document.getElementById('uploadedCount').textContent = userData.uploaded.length;
+      document.getElementById('reviewsCount').textContent = userData.reviews.length;
+    }
+    
+    // 加载标签页数据
+    function loadTabData(tabId) {
+      const userData = JSON.parse(localStorage.getItem('userData')) || {
+        bookshelf: [],
+        uploaded: [],
+        reviews: []
+      };
+      
+      switch(tabId) {
+        case 'bookshelf':
+          renderBookshelf(userData.bookshelf);
+          break;
+        case 'uploaded':
+          renderUploadedBooks(userData.uploaded);
+          break;
+        case 'reviews':
+          renderUserReviews(userData.reviews);
+          break;
+      }
+    }
+    
+    // 渲染书架图书
+    function renderBookshelf(bookshelf) {
+      const bookshelfGrid = document.getElementById('bookshelfGrid');
+      const noBookshelfResults = document.getElementById('noBookshelfResults');
+      
+      if (bookshelf.length === 0) {
+        bookshelfGrid.innerHTML = '';
+        noBookshelfResults.style.display = 'block';
+        return;
+      }
+      
+      noBookshelfResults.style.display = 'none';
+      bookshelfGrid.innerHTML = '';
+      
+      bookshelf.forEach(bookId => {
+        const books = getAllBooks();
+        const book = books.find(b => b.id === bookId);
+        
+        if (book) {
+          const bookCard = createBookCard(book);
+          bookshelfGrid.appendChild(bookCard);
+        }
+      });
+    }
+    
+    // 渲染用户上传的图书
+    function renderUploadedBooks(uploadedBooks) {
+      const uploadedGrid = document.getElementById('uploadedGrid');
+      const noUploadedResults = document.getElementById('noUploadedResults');
+      
+      if (uploadedBooks.length === 0) {
+        uploadedGrid.innerHTML = '';
+        noUploadedResults.style.display = 'block';
+        return;
+      }
+      
+      noUploadedResults.style.display = 'none';
+      uploadedGrid.innerHTML = '';
+      
+      uploadedBooks.forEach(book => {
+        const bookCard = createBookCard(book);
+        uploadedGrid.appendChild(bookCard);
+      });
+    }
+    
+    // 渲染用户评论
+    function renderUserReviews(userReviews) {
+      const userReviewsList = document.getElementById('userReviewsList');
+      const noReviewsResults = document.getElementById('noReviewsResults');
+      
+      if (userReviews.length === 0) {
+        userReviewsList.innerHTML = '';
+        noReviewsResults.style.display = 'block';
+        return;
+      }
+      
+      noReviewsResults.style.display = 'none';
+      userReviewsList.innerHTML = '';
+      
+      userReviews.forEach(review => {
+        const reviewItem = document.createElement('div');
+        reviewItem.className = 'user-review-item';
+        reviewItem.innerHTML = `
+          <div class="user-review-header">
+            <div class="user-review-book">
+              <div class="user-review-book-title" data-id="${review.bookId}">${review.bookTitle}</div>
+              <div class="user-review-book-author">${review.bookAuthor}</div>
+            </div>
+            <div class="user-review-meta">
+              <div class="user-review-rating">${generateStars(review.rating)}</div>
+              <div class="user-review-date">${review.date}</div>
+            </div>
+          </div>
+          <div class="user-review-content">
+            <p>${review.comment}</p>
+          </div>
+        `;
+        
+        // 添加点击图书标题跳转详情页的功能
+        const bookTitle = reviewItem.querySelector('.user-review-book-title');
+        bookTitle.addEventListener('click', function() {
+          const bookId = parseInt(this.getAttribute('data-id'));
+          showBookDetail(bookId);
+        });
+        
+        userReviewsList.appendChild(reviewItem);
+      });
+    }
+    
+    // 添加到书架功能
+    function addToBookshelf(bookId) {
+      const userData = JSON.parse(localStorage.getItem('userData')) || {
+        bookshelf: [],
+        uploaded: [],
+        reviews: []
+      };
+      
+      // 如果图书不在书架中，则添加
+      if (!userData.bookshelf.includes(bookId)) {
+        userData.bookshelf.push(bookId);
+        localStorage.setItem('userData', JSON.stringify(userData));
+        
+        // 更新个人主页数据
+        updateStats(userData);
+        
+        alert('已添加到书架！');
+      } else {
+        alert('这本书已经在您的书架中了！');
+      }
+    }
+    
+    // 保存上传的图书
+    function saveUploadedBook(book) {
+      const userData = JSON.parse(localStorage.getItem('userData')) || {
+        bookshelf: [],
+        uploaded: [],
+        reviews: []
+      };
+      
+      // 为上传的图书生成唯一ID
+      book.id = Date.now();
+      
+      userData.uploaded.push(book);
+      localStorage.setItem('userData', JSON.stringify(userData));
+      
+      // 更新个人主页数据
+      updateStats(userData);
+    }
+    
+    // 保存用户评论
+    function saveUserReview(bookId, rating, comment) {
+      const books = getAllBooks();
+      const book = books.find(b => b.id === bookId);
+      
+      if (!book) return;
+      
+      const userData = JSON.parse(localStorage.getItem('userData')) || {
+        bookshelf: [],
+        uploaded: [],
+        reviews: []
+      };
+      
+      const review = {
+        bookId: bookId,
+        bookTitle: book.title,
+        bookAuthor: book.author,
+        rating: rating,
+        comment: comment,
+        date: new Date().toISOString().split('T')[0]
+      };
+      
+      userData.reviews.push(review);
+      localStorage.setItem('userData', JSON.stringify(userData));
+      
+      // 更新个人主页数据
+      updateStats(userData);
+    }
+
     // 初始化书籍数据
     function initializeBooks() {
       const books = [
@@ -1879,7 +2440,7 @@
           id: 1,
           title: '三体',
           author: '刘慈欣',
-          description: '《三体》是刘慈欣创作的系列长篇科幻小说，讲述了地球人类文明和三体文明的信息交流、生死搏杀及两个文明在宇宙中的兴衰历程。小说以气势宏大的叙事和深刻的哲学思考著称，是中国科幻文学的里程碑之作。其第一部经过刘宇昆翻译后获得了第73届雨果奖最佳长篇小说奖。',
+          description: '《三体》是刘慈欣创作的系列长篇科幻小说，讲述了地球人类文明和三体文明的信息交流、生死搏杀及两个文明在宇宙中的兴衰历程。小说以气势宏大的叙事和深刻的哲学思考著称，是中国科幻文学的里程碑之作。',
           tags: ['科幻', '小说', '中国文学'],
           image: 'images/three-body.jpg',
           publisher: '重庆出版社',
@@ -2386,6 +2947,11 @@
       // 设置评论表单提交
       setupReviewForm(bookId);
       
+      // 设置添加到书架按钮
+      document.getElementById('addToBookshelf').addEventListener('click', function() {
+        addToBookshelf(bookId);
+      });
+      
       // 设置返回按钮
       document.getElementById('backFromDetail').addEventListener('click', function() {
         // 返回到之前的页面
@@ -2625,15 +3191,9 @@
             return;
           }
           
-          // 模拟提交评论
-          const newReview = {
-            user: '当前用户',
-            rating: rating,
-            comment: comment,
-            date: new Date().toISOString().split('T')[0]
-          };
+          // 保存用户评论
+          saveUserReview(bookId, rating, comment);
           
-          // 在实际应用中，这里应该发送到服务器
           alert('评论提交成功！感谢您的分享。');
           reviewForm.reset();
           resetStars();
@@ -2726,4 +3286,4 @@
     }
   </script>
 </body>
-</html>
+</html> 
